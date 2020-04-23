@@ -7,10 +7,24 @@
 	<artifactId>data-eng</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<dependencies>
+
+		<!-- SPARK -->
 		<dependency>
 			<groupId>org.apache.spark</groupId>
 			<artifactId>spark-sql_2.12</artifactId>
 			<version>2.4.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-mllib_2.12</artifactId>
+			<version>2.4.5</version>
+		</dependency>
+
+		<!-- SPRING -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>5.2.5.RELEASE</version>
 		</dependency>
 	</dependencies>
 </project>
