@@ -20,6 +20,6 @@ public class SessionWrapper {
 	}
 
 	public static void close() {
-		session.stop();
+		session.close();
 	}
 }

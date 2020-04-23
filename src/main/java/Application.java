@@ -5,7 +5,8 @@ public class Application {
 
 	public static void main(String[] args) {
 		StatisticsManager manager = new StatisticsManager();
-		manager.correlation();
+		manager.correlationFromData();
+		manager.correlationFromFile();
 		SessionWrapper.close();
 	}
 }
