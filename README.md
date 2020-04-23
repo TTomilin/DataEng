@@ -1,7 +1,6 @@
 # Q4 Data Engineering 
 
-## Milestone 1 — choosing and preparing your data,
-introductory analysis
+## Milestone 1 — choosing and preparing your data, introductory analysis
 
 For the first milestone, you are asked to:
 - Choose, download, load, and clean one or more datasets, where you expect to find
