@@ -18,7 +18,7 @@ import session.SessionWrapper;
 
 public class StatisticsManager {
 
-	public void correlation() {
+	public void correlationFromData() {
 		List<Row> data = Arrays.asList(
 				RowFactory.create(Vectors.sparse(4, new int[]{0, 3}, new double[]{1.0, -2.0})),
 				RowFactory.create(Vectors.dense(4.0, 5.0, 0.0, 3.0)),
@@ -31,12 +31,26 @@ public class StatisticsManager {
 		});
 
 		SparkSession spark = SessionWrapper.getSession();
-
 		Dataset<Row> df = spark.createDataFrame(data, schema);
-		Row r1 = Correlation.corr(df, "features").head();
-		System.out.println("Pearson correlation matrix:\n" + r1.get(0).toString());
+		printCorrelationMatrix(df, "features");
+	}
 
-		Row r2 = Correlation.corr(df, "features", "spearman").head();
-		System.out.println("Spearman correlation matrix:\n" + r2.get(0).toString());
+	public void correlationFromFile() {
+		SparkSession spark = SessionWrapper.getSession();
+		Dataset<Row> prices = spark.read()
+				.format("csv")
+				.option("header", "true")
+				.option("inferSchema", "true")
+				.load("src/main/resources/nyse/prices.csv")
+				.cache();
+		printCorrelationMatrix(prices, "open");
+	}
+
+	private void printCorrelationMatrix(Dataset<Row> dataFrame, String features) {
+		Row pearson = Correlation.corr(dataFrame, features).head();
+		Row spearman = Correlation.corr(dataFrame, features, "spearman").head();
+
+		System.out.println("Pearson correlation matrix:\n" + pearson.get(0).toString());
+		System.out.println("Spearman correlation matrix:\n" + spearman.get(0).toString());
 	}
 }
