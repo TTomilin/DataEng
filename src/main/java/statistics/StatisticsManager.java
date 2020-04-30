@@ -1,69 +1,117 @@
 package statistics;
 
 import java.util.Arrays;
-import java.util.Locale;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
-import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.JavaPairRDD;
+import org.apache.spark.api.java.function.FilterFunction;
+import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.MapFunction;
-import org.apache.spark.sql.Dataset;
+import org.apache.spark.api.java.function.PairFlatMapFunction;
 import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.types.StructType;
 
-import scala.collection.Seq;
+import scala.Tuple2;
+import scala.collection.immutable.Map;
+import scala.collection.immutable.Set;
 import schema.EnergyPriceEntry;
 import session.SessionWrapper;
 
 public class StatisticsManager {
 
-	public static final double THRESHOLD = 0.5;
+	private static final double THRESHOLD = 0.5;
+	private static final String BASE_PATH = "src/main/resources/";
+
+	private static class PearsonStatisticMapper implements PairFlatMapFunction<ValuePair, Integer, Double> {
+
+		public Iterator<Tuple2<Integer, Double>> call(ValuePair pair) {
+			Tuple2<Integer,Double>[] tuples = new Tuple2[6];
+			double x = pair.getX();
+			double y = pair.getY();
+			if(x != 0.0 && y != 0.0) {
+				tuples[0] = new Tuple2(0, Double.valueOf(1));
+				tuples[1] = new Tuple2(1, x);
+				tuples[2] = new Tuple2(2, y);
+				tuples[3] = new Tuple2(3, Math.pow(x, 2));
+				tuples[4] = new Tuple2(4, Math.pow(y, 2));
+				tuples[5] = new Tuple2(5, x * y);
+			}
+			return Arrays.asList(tuples).iterator();
+		}
+	}
+
+	private static class FormulaComponentSummator implements Function2<Double, Double, Double> {
+		/*
+		Given any two Floats, this method returns the sum.
+		Useful for a reduce operation that adds a stream of numbers.
+		 */
+		public Double call(Double a, Double b) {
+			return a + b;
+		}
+	}
+
+	private interface NegatableFilterFunction<T> extends FilterFunction<T> {
+
+		NegatableFilterFunction<T> not();
+	}
 
 	public void correlationFromFile() {
-		SparkConf sparkConf = new SparkConf()
-				.setAppName("DataEng")
-				.setMaster("local[2]")
-				.set("spark.executor.memory", "2g");
-		JavaSparkContext jc = new JavaSparkContext(sparkConf);
-
-		String path = "src/main/resources/power-sys/reduced_dataset.csv";
+//		String path = "power-sys/reduced_dataset.csv";
+		String path = BASE_PATH + "energy-data/wind_generation_reduced.csv";
 		SparkSession spark = SessionWrapper.getSession();
-		Dataset<EnergyPriceEntry> rows = spark.read()
+
+		FilterFunction<Row> filter = Row::anyNull;
+		JavaPairRDD<Integer, Double> mappedFormulaComponents = spark.read()
 				.format("csv")
 				.option("header", "true")
 				.option("inferSchema", "true")
 				.load(path)
+				.filter((FilterFunction<Row>) row -> !row.anyNull())
 				.map(
-						(MapFunction<Row, EnergyPriceEntry>) row -> {
-							StructType schema = row.schema();
-							String[] strings = schema.fieldNames();
-
-							Seq<Object> objectSeq = row.toSeq();
-							EnergyPriceEntry priceEntry = new EnergyPriceEntry(row.getTimestamp(1));
-							Arrays.stream(row.schema().fieldNames()).forEach(name -> {
-								String countryCode = name.substring(0, 2);
-								Locale locale = new Locale("", countryCode);
-								Object value = row.getAs(name);
-								if (value.getClass() == Double.class) {
-									priceEntry.addPrice(locale, (Double) value);
-								}
-							});
-							return priceEntry;
+						(MapFunction<Row, ValuePair>) row -> {
+							Set<Object> objectSet = row.schema().toSet();
+							List<String> names = Arrays.asList(row.schema().names());
+							List<String> fieldNames = Arrays.asList(row.schema().fieldNames());
+							// Map<String, Object> valuesMap = row.getValuesMap();
+//							System.out.println("Length: " + row.length() + " - " + row.toString());
+							ValuePair valuePair = new ValuePair(row.getInt(1), row.getInt(5));
+							return valuePair;
 						},
-						Encoders.bean(EnergyPriceEntry.class)
-				);
-//				.map((MapFunction<EnergyPriceEntry, Double>) price -> this.correlationFunction(
-//						price.getPrices1(),
-//						price.getPrices2()
-//				))
-//				.filter(this::applyThreshold)
-//				.collect();
+						Encoders.bean(ValuePair.class))
+				.javaRDD()
+				.flatMapToPair(new PearsonStatisticMapper())
+				.reduceByKey(new FormulaComponentSummator());
 
-		rows.printSchema();
-		rows.show(10);
-		System.out.println("Dataframe has " + rows.count() + " rows and " + rows.columns().length + " columns.");
+		// Execute lazy initialization
+		List<Tuple2<Integer,Double>> output = mappedFormulaComponents.collect();
+
+		double count = 0, sumX = 0, sumY = 0, sumXSq = 0, sumYSq = 0, xDotY = 0;
+		for(Tuple2<Integer,Double> a : output) {
+			switch (a._1()) {
+			case 0 : count = a._2();
+				break;
+			case 1 : sumX = a._2();
+				break;
+			case 2 : sumY = a._2();
+				break;
+			case 3 : sumXSq = a._2();
+				break;
+			case 4 : sumYSq = a._2();
+				break;
+			case 5 : xDotY = a._2();
+				break;
+			default:
+				throw new RuntimeException("Unexpected Value");
+			}
+		}
+
+		double numerator = count * xDotY - sumX * sumY;
+		double denominator = Math.sqrt(count * sumXSq - Math.pow(sumX, 2)) * Math.sqrt(count * sumYSq - Math.pow(sumY, 2));
+		double pearson = numerator / denominator;
+		System.out.println("Correlation:" + pearson);
 	}
 
 	private static boolean applyThreshold(double correlation) {
