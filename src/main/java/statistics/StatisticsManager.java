@@ -19,57 +19,24 @@ import scala.collection.immutable.Map;
 import scala.collection.immutable.Set;
 import schema.EnergyPriceEntry;
 import session.SessionWrapper;
+import statistics.mapper.PearsonStatisticMapper;
+import statistics.reducer.FormulaComponentSummator;
 
 public class StatisticsManager {
 
 	private static final double THRESHOLD = 0.5;
 	private static final String BASE_PATH = "src/main/resources/";
 
-	private static class PearsonStatisticMapper implements PairFlatMapFunction<ValuePair, Integer, Double> {
-
-		public Iterator<Tuple2<Integer, Double>> call(ValuePair pair) {
-			Tuple2<Integer,Double>[] tuples = new Tuple2[6];
-			double x = pair.getX();
-			double y = pair.getY();
-			if(x != 0.0 && y != 0.0) {
-				tuples[0] = new Tuple2(0, Double.valueOf(1));
-				tuples[1] = new Tuple2(1, x);
-				tuples[2] = new Tuple2(2, y);
-				tuples[3] = new Tuple2(3, Math.pow(x, 2));
-				tuples[4] = new Tuple2(4, Math.pow(y, 2));
-				tuples[5] = new Tuple2(5, x * y);
-			}
-			return Arrays.asList(tuples).iterator();
-		}
-	}
-
-	private static class FormulaComponentSummator implements Function2<Double, Double, Double> {
-		/*
-		Given any two Floats, this method returns the sum.
-		Useful for a reduce operation that adds a stream of numbers.
-		 */
-		public Double call(Double a, Double b) {
-			return a + b;
-		}
-	}
-
-	private interface NegatableFilterFunction<T> extends FilterFunction<T> {
-
-		NegatableFilterFunction<T> not();
-	}
-
-	public void correlationFromFile() {
-//		String path = "power-sys/reduced_dataset.csv";
+	public void pearsonCorrelation() {
 		String path = BASE_PATH + "energy-data/wind_generation_reduced.csv";
 		SparkSession spark = SessionWrapper.getSession();
 
-		FilterFunction<Row> filter = Row::anyNull;
 		JavaPairRDD<Integer, Double> mappedFormulaComponents = spark.read()
 				.format("csv")
 				.option("header", "true")
 				.option("inferSchema", "true")
 				.load(path)
-				.filter((FilterFunction<Row>) row -> !row.anyNull())
+				.filter((FilterFunction<Row>) row -> !row.anyNull()) // To prevent spark from reading superfluous rows
 				.map(
 						(MapFunction<Row, ValuePair>) row -> {
 							Set<Object> objectSet = row.schema().toSet();

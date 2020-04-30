@@ -10,6 +10,6 @@ public class Application {
 			System.setProperty("hadoop.home.dir", args[0]);
 		}
 		StatisticsManager manager = new StatisticsManager();
-		manager.correlationFromFile();
+		manager.pearsonCorrelation();
 	}
 }
