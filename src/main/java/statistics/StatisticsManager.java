@@ -31,7 +31,7 @@ public class StatisticsManager {
 		String path = BASE_PATH + "energy-data/wind_generation_reduced.csv";
 		SparkSession spark = SessionWrapper.getSession();
 
-		JavaPairRDD<Integer, Double> mappedFormulaComponents = spark.read()
+		JavaPairRDD<FormulaComponent, Double> mappedFormulaComponents = spark.read()
 				.format("csv")
 				.option("header", "true")
 				.option("inferSchema", "true")
@@ -53,25 +53,25 @@ public class StatisticsManager {
 				.reduceByKey(new FormulaComponentSummator());
 
 		// Execute lazy initialization
-		List<Tuple2<Integer,Double>> output = mappedFormulaComponents.collect();
+		List<Tuple2<FormulaComponent, Double>> output = mappedFormulaComponents.collect();
 
 		double count = 0, sumX = 0, sumY = 0, sumXSq = 0, sumYSq = 0, xDotY = 0;
-		for(Tuple2<Integer,Double> a : output) {
-			switch (a._1()) {
-			case 0 : count = a._2();
+		for (Tuple2<FormulaComponent, Double> tuple : output) {
+			switch (tuple._1()) {
+			case COUNT: count = tuple._2();
 				break;
-			case 1 : sumX = a._2();
+			case FIRST_ELEMENT: sumX = tuple._2();
 				break;
-			case 2 : sumY = a._2();
+			case SECOND_ELEMENT: sumY = tuple._2();
 				break;
-			case 3 : sumXSq = a._2();
+			case FIRST_SQUARED: sumXSq = tuple._2();
 				break;
-			case 4 : sumYSq = a._2();
+			case SECOND_SQUARED: sumYSq = tuple._2();
 				break;
-			case 5 : xDotY = a._2();
+			case PRODUCT: xDotY = tuple._2();
 				break;
 			default:
-				throw new RuntimeException("Unexpected Value");
+				throw new RuntimeException("Unknown formula component: " + tuple._1().name());
 			}
 		}
 
