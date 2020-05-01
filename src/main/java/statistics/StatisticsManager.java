@@ -22,6 +22,7 @@ import org.paukov.combinatorics.CombinatoricsFactory;
 import org.paukov.combinatorics.Generator;
 import org.paukov.combinatorics.ICombinatoricsVector;
 
+import scala.Serializable;
 import scala.Tuple2;
 import scala.collection.Iterable;
 import schema.EnergyValue;
@@ -39,13 +40,13 @@ import static statistics.FormulaComponent.PRODUCT;
 import static statistics.FormulaComponent.SECOND_ELEMENT;
 import static statistics.FormulaComponent.SECOND_SQUARED;
 
-public class StatisticsManager {
+public class StatisticsManager implements Serializable {
 
 	private static final double THRESHOLD = 0.5;
 	private static final String BASE_PATH = "src/main/resources/";
 	private static final String WIND_ENERGY = BASE_PATH + "energy-data/wind_generation.csv";
 	private static final String SOLAR_ENERGY = BASE_PATH + "energy-data/solar_generation.csv";
-	// TODO Remove -  Only for development purposes
+	// TODO Remove - Only for development purposes
 	private static final String WIND_ENERGY_REDUCED = BASE_PATH + "energy-data/wind_generation_reduced.csv";
 
 	public void pearsonCorrelation() {
@@ -65,10 +66,7 @@ public class StatisticsManager {
 							Iterable<StructField> columns = row.schema().toSeq().drop(1); // Drop timestamp
 							columns.foreach(struct -> {
 								String countryCode = struct.name();
-								boolean isStringInstance = struct.dataType().typeName().equalsIgnoreCase(Integer.class.getSimpleName());
-								Double value = isStringInstance ?
-										(double) ((Integer) row.getAs(countryCode)).intValue() :
-										(double) row.getAs(countryCode);
+								Double value = row.getAs(countryCode);
 								System.out.println("Country " + countryCode + ", value: " + value);
 								EnergyValue energyValue = new EnergyValue(timestamp, countryCode, value);
 								energyValueList.add(energyValue);
@@ -109,18 +107,16 @@ public class StatisticsManager {
 
 		// Execute lazy initialization by running collection to map
 		List<Tuple2<FormulaKey, FormulaValue>> formulaComponents = mappedFormulaComponents.collect();
-		Map<CountryPair, List<Tuple2<FormulaKey, FormulaValue>>> collect = formulaComponents.stream().collect(Collectors.groupingBy(entry -> entry._1().getCountryPair()));
+		/*Map<CountryPair, List<Tuple2<FormulaKey, FormulaValue>>> collect = formulaComponents.stream().collect(Collectors.groupingBy(entry -> entry._1().getCountryPair()));
 		Map<FormulaComponent, FormulaValue> formulaValueMap = collect.values().stream()
 				.flatMap(List::stream)
-				.collect(Collectors.toMap(tuple -> tuple._1().getComponent(), tuple -> tuple._2()));
+				.collect(Collectors.toMap(tuple -> tuple._1().getComponent(), tuple -> tuple._2()));*/
 
-		//		double pearson = calculatePearson(formulaComponents);
-		double pearson = 5;
+		/*double pearson = calculatePearson(formulaComponents);
 		System.out.println("Correlation: " + pearson);
-
 		if (pearson > THRESHOLD) {
 			// TODO propagate result
-		}
+		}*/
 	}
 
 	private boolean bothValuesGiven(EnergyValuePair pair) {
