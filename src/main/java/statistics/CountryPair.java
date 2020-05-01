@@ -1,6 +1,8 @@
 package statistics;
 
-public class CountryPair {
+import scala.Serializable;
+
+public class CountryPair implements Serializable {
 	private final String firstCountry;
 	private final String secondCountry;
 

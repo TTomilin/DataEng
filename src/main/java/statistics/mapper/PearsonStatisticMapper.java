@@ -30,9 +30,6 @@ public class PearsonStatisticMapper implements PairFlatMapFunction<EnergyValuePa
 	public Iterator<Tuple2<FormulaKey, FormulaValue>> call(EnergyValuePair pair) {
 		double x = pair.getX();
 		double y = pair.getY();
-		if (x == 0 || y == 0) {
-			return null; // This value pair is disregarded if one of the values is missing
-		}
 		CountryPair countryPair = pair.getCountryPair();
 		Timestamp timestamp = pair.getTimestamp();
 		Set<Tuple2<FormulaKey, FormulaValue>> tuples = Set.of(

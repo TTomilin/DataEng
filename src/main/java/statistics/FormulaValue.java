@@ -2,7 +2,9 @@ package statistics;
 
 import java.sql.Timestamp;
 
-public class FormulaValue {
+import scala.Serializable;
+
+public class FormulaValue implements Serializable {
 
 	private final Timestamp timestamp;
 	private final CountryPair countryPair;

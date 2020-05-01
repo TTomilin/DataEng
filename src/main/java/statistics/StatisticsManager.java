@@ -90,7 +90,7 @@ public class StatisticsManager {
 								EnergyValue secondValue = vector.get(1);
 								valuePairs.add(new EnergyValuePair(firstValue.getTimestamp(),
 										new CountryPair(firstValue.getCountry(), secondValue.getCountry()),
-										firstValue.getValue(), firstValue.getValue())
+										firstValue.getValue(), secondValue.getValue())
 								);
 							}
 
@@ -103,6 +103,7 @@ public class StatisticsManager {
 						Encoders.bean(EnergyValuePair.class)
 				)
 				.javaRDD()
+				.filter(this::bothValuesGiven)
 				.flatMapToPair(new PearsonStatisticMapper())
 				.reduceByKey(new FormulaComponentSummator());
 
@@ -120,6 +121,10 @@ public class StatisticsManager {
 		if (pearson > THRESHOLD) {
 			// TODO propagate result
 		}
+	}
+
+	private boolean bothValuesGiven(EnergyValuePair pair) {
+		return pair.getX() != 0 && pair.getY() != 0;
 	}
 
 	private EnergyValuePair toValuePair(ICombinatoricsVector<EnergyValue> vector) {

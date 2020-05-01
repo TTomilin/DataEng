@@ -1,6 +1,8 @@
 package statistics;
 
-public class FormulaKey {
+import scala.Serializable;
+
+public class FormulaKey implements Serializable {
 
 	private final CountryPair countryPair;
 	private final FormulaComponent component;
