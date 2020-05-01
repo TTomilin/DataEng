@@ -10,16 +10,11 @@ import scala.Serializable;
 public class EnergyPriceEntry implements Serializable {
 
 	private Timestamp timestamp;
-	private Map<Locale, EnergyPrice> priceMap;
+	private Map<Locale, EnergyValue> priceMap;
 
 	public EnergyPriceEntry(Timestamp timestamp) {
 		this.timestamp = timestamp;
 		this.priceMap = new HashMap<>();
-	}
-
-	public void addPrice(Locale locale, double value) {
-		EnergyPrice price = new EnergyPrice(value);
-		priceMap.put(locale, price);
 	}
 
 	public Timestamp getTimestamp() {
@@ -30,11 +25,11 @@ public class EnergyPriceEntry implements Serializable {
 		this.timestamp = timestamp;
 	}
 
-	public Map<Locale, EnergyPrice> getPriceMap() {
+	public Map<Locale, EnergyValue> getPriceMap() {
 		return priceMap;
 	}
 
-	public void setPriceMap(Map<Locale, EnergyPrice> priceMap) {
+	public void setPriceMap(Map<Locale, EnergyValue> priceMap) {
 		this.priceMap = priceMap;
 	}
 }
