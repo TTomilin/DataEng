@@ -1,12 +1,19 @@
 package statistics;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.spark.api.java.function.FilterFunction;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
 import scala.Serializable;
+import scala.Tuple2;
+import schema.CountryPair;
 import schema.EnergyDataPair;
 import session.SessionWrapper;
+import statistics.formula.FormulaComponent;
+import statistics.formula.FormulaValue;
 import statistics.mapper.CombinationMapper;
 import statistics.mapper.CountryMapper;
 import statistics.mapper.PearsonStatisticComputer;
@@ -28,7 +35,7 @@ public class StatisticsManager implements Serializable {
 	public void pearsonCorrelation() {
 		SparkSession spark = SessionWrapper.getSession();
 
-		spark.read()
+		List<Tuple2<CountryPair, Double>> collection = spark.read()
 				.format("csv")
 				.option("header", "true")
 				.option("inferSchema", "true")
