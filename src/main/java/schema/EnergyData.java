@@ -1,4 +1,4 @@
-package statistics;
+package schema;
 
 import java.sql.Timestamp;
 
@@ -10,14 +10,9 @@ import scala.Serializable;
 @Getter
 @ToString
 @AllArgsConstructor
-public class FormulaValue implements Serializable {
+public class EnergyData implements Serializable {
 
 	private final Timestamp timestamp;
-	private final CountryPair countryPair;
-	private final FormulaComponent component;
+	private final String country;
 	private double value;
-
-	public void increaseValue(double value) {
-		this.value += value;
-	}
 }

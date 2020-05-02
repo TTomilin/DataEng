@@ -48,6 +48,15 @@
 			<version>2.2</version>
 		</dependency>
 
+		<!-- LOMBOK -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.12</version>
+			<scope>provided</scope>
+		</dependency>
+
+
 		<!-- SPRING -->
 		<dependency>
 			<groupId>org.springframework</groupId>

@@ -1,33 +1,17 @@
 package statistics;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
-import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.function.FilterFunction;
-import org.apache.spark.api.java.function.FlatMapFunction;
-import org.apache.spark.api.java.function.MapFunction;
-import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.types.DataType;
-import org.apache.spark.sql.types.StructField;
-import org.paukov.combinatorics.CombinatoricsFactory;
-import org.paukov.combinatorics.Generator;
-import org.paukov.combinatorics.ICombinatoricsVector;
 
 import scala.Serializable;
 import scala.Tuple2;
-import scala.collection.Iterable;
-import schema.EnergyValue;
-import schema.EnergyValuePair;
+import schema.EnergyDataPair;
 import session.SessionWrapper;
+import statistics.mapper.CombinationMapper;
+import statistics.mapper.CountryMapper;
 import statistics.mapper.PearsonStatisticMapper;
 import statistics.reducer.FormulaComponentSummator;
 
@@ -46,89 +30,32 @@ public class StatisticsManager implements Serializable {
 	private static final String BASE_PATH = "src/main/resources/";
 	private static final String WIND_ENERGY = BASE_PATH + "energy-data/wind_generation.csv";
 	private static final String SOLAR_ENERGY = BASE_PATH + "energy-data/solar_generation.csv";
-	// TODO Remove - Only for development purposes
+
+	// TODO Remove the following - For development purposes only
 	private static final String WIND_ENERGY_REDUCED = BASE_PATH + "energy-data/wind_generation_reduced.csv";
+	private static final String WIND_ENERGY_3_COUNTRIES = BASE_PATH + "energy-data/wind_generation_3_countries.csv";
 
 	public void pearsonCorrelation() {
 		SparkSession spark = SessionWrapper.getSession();
 
-		JavaPairRDD<FormulaKey, FormulaValue> mappedFormulaComponents = spark.read()
+		Map<CountryPair, java.lang.Iterable<Tuple2<FormulaComponent, FormulaValue>>> countryPairIterableMap = spark.read()
 				.format("csv")
 				.option("header", "true")
 				.option("inferSchema", "true")
-				.load(WIND_ENERGY_REDUCED)
+				.load(WIND_ENERGY_3_COUNTRIES)
 				.filter((FilterFunction<Row>) row -> !row.anyNull()) // To prevent spark from reading superfluous rows
-				.flatMap(
-						(FlatMapFunction<Row, EnergyValuePair>) row -> {
-
-							List<EnergyValue> energyValueList = new ArrayList<>();
-							Timestamp timestamp = row.getTimestamp(0);
-							Iterable<StructField> columns = row.schema().toSeq().drop(1); // Drop timestamp
-							columns.foreach(struct -> {
-								String countryCode = struct.name();
-								Double value = row.getAs(countryCode);
-								System.out.println("Country " + countryCode + ", value: " + value);
-								EnergyValue energyValue = new EnergyValue(timestamp, countryCode, value);
-								energyValueList.add(energyValue);
-								return energyValue;
-							});
-
-							ICombinatoricsVector<EnergyValue> initialVector = CombinatoricsFactory.createVector(energyValueList);
-							Generator<EnergyValue> generator = CombinatoricsFactory.createSimpleCombinationGenerator(initialVector, 2);
-							List<ICombinatoricsVector<EnergyValue>> iCombinatoricsVectors = generator.generateAllObjects();
-
-							Iterator<ICombinatoricsVector<EnergyValue>> iterator = iCombinatoricsVectors.iterator();
-							List<EnergyValuePair> valuePairs = new ArrayList<>();
-
-							// TODO replace with stream
-							while (iterator.hasNext()) {
-								ICombinatoricsVector<EnergyValue> energyValues = iterator.next();
-								List<EnergyValue> vector = energyValues.getVector();
-								EnergyValue firstValue = vector.get(0);
-								EnergyValue secondValue = vector.get(1);
-								valuePairs.add(new EnergyValuePair(firstValue.getTimestamp(),
-										new CountryPair(firstValue.getCountry(), secondValue.getCountry()),
-										firstValue.getValue(), secondValue.getValue())
-								);
-							}
-
-							/*List<EnergyValuePair> valuePairs = iCombinatoricsVectors.stream()
-									.map(this::toValuePair)
-									.collect(Collectors.toList());*/
-							return valuePairs.iterator();
-//							return new EnergyValuePair(timestamp, "EE", "NL", row.getInt(1), row.getInt(5));
-						},
-						Encoders.bean(EnergyValuePair.class)
-				)
 				.javaRDD()
+				.flatMap(new CombinationMapper())
 				.filter(this::bothValuesGiven)
 				.flatMapToPair(new PearsonStatisticMapper())
-				.reduceByKey(new FormulaComponentSummator());
-
-		// Execute lazy initialization by running collection to map
-		List<Tuple2<FormulaKey, FormulaValue>> formulaComponents = mappedFormulaComponents.collect();
-		/*Map<CountryPair, List<Tuple2<FormulaKey, FormulaValue>>> collect = formulaComponents.stream().collect(Collectors.groupingBy(entry -> entry._1().getCountryPair()));
-		Map<FormulaComponent, FormulaValue> formulaValueMap = collect.values().stream()
-				.flatMap(List::stream)
-				.collect(Collectors.toMap(tuple -> tuple._1().getComponent(), tuple -> tuple._2()));*/
-
-		/*double pearson = calculatePearson(formulaComponents);
-		System.out.println("Correlation: " + pearson);
-		if (pearson > THRESHOLD) {
-			// TODO propagate result
-		}*/
+				.reduceByKey(new FormulaComponentSummator())
+				.mapToPair(new CountryMapper())
+				.groupByKey()
+				.collectAsMap();
 	}
 
-	private boolean bothValuesGiven(EnergyValuePair pair) {
-		return pair.getX() != 0 && pair.getY() != 0;
-	}
-
-	private EnergyValuePair toValuePair(ICombinatoricsVector<EnergyValue> vector) {
-		EnergyValue firstValue = vector.getValue(0);
-		EnergyValue secondValue = vector.getValue(1);
-		return new EnergyValuePair(firstValue.getTimestamp(),
-				new CountryPair(firstValue.getCountry(), secondValue.getCountry()),
-				firstValue.getValue(), firstValue.getValue());
+	private boolean bothValuesGiven(EnergyDataPair pair) {
+		return pair.getEnergyValuePair().bothValuesPresent();
 	}
 
 	/**
