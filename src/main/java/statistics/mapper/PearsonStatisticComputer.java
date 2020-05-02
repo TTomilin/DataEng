@@ -35,8 +35,8 @@ public class PearsonStatisticComputer implements Function<Map<FormulaComponent, 
 		BigDecimal XDotY = new BigDecimal(formulaComponents.get(PRODUCT).getValue());
 
 		BigDecimal numerator = count.multiply(XDotY).subtract(sumX.multiply(sumY));
-		BigDecimal left = count.multiply(sumXSquared.subtract(sumX.pow(2))).sqrt(mathContext);
-		BigDecimal right = count.multiply(sumYSquared.subtract(sumY.pow(2))).sqrt(mathContext);
+		BigDecimal left = count.multiply(sumXSquared).subtract(sumX.pow(2)).sqrt(mathContext);
+		BigDecimal right = count.multiply(sumYSquared).subtract(sumY.pow(2)).sqrt(mathContext);
 		BigDecimal denominator = left.multiply(right);
 
 		return numerator.divide(denominator).doubleValue();
