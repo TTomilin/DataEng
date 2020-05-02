@@ -1,4 +1,4 @@
-package statistics;
+package schema;
 
 import java.util.Comparator;
 

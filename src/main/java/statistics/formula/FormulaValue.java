@@ -1,4 +1,4 @@
-package statistics;
+package statistics.formula;
 
 import java.sql.Timestamp;
 
@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import scala.Serializable;
+import schema.CountryPair;
 
 @Getter
 @ToString

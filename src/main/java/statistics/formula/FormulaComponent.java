@@ -1,4 +1,4 @@
-package statistics;
+package statistics.formula;
 
 public enum FormulaComponent {
 	COUNT,

@@ -16,7 +16,7 @@ import org.paukov.combinatorics.ICombinatoricsVector;
 import schema.EnergyData;
 import schema.EnergyDataPair;
 import schema.EnergyValuePair;
-import statistics.CountryPair;
+import schema.CountryPair;
 
 /**
  * Maps the given input Row into a collection of country-wise combinations
@@ -69,7 +69,7 @@ public class CombinationMapper implements FlatMapFunction<Row, EnergyDataPair> {
 	}
 
 	/**
-	 * Converts a combinatorics vector to a pair of energy data
+	 * Converts the given combinatorics vector into an energy data pair
 	 * @param vector
 	 * @return
 	 */

@@ -7,17 +7,17 @@ import org.apache.spark.api.java.function.PairFlatMapFunction;
 
 import scala.Tuple2;
 import schema.EnergyDataPair;
-import statistics.FormulaComponent;
-import statistics.FormulaKey;
-import statistics.FormulaValue;
+import statistics.formula.FormulaComponent;
+import statistics.formula.FormulaKey;
+import statistics.formula.FormulaValue;
 
 import static java.lang.Math.pow;
-import static statistics.FormulaComponent.COUNT;
-import static statistics.FormulaComponent.FIRST_ELEMENT;
-import static statistics.FormulaComponent.FIRST_SQUARED;
-import static statistics.FormulaComponent.PRODUCT;
-import static statistics.FormulaComponent.SECOND_ELEMENT;
-import static statistics.FormulaComponent.SECOND_SQUARED;
+import static statistics.formula.FormulaComponent.COUNT;
+import static statistics.formula.FormulaComponent.FIRST_ELEMENT;
+import static statistics.formula.FormulaComponent.FIRST_SQUARED;
+import static statistics.formula.FormulaComponent.PRODUCT;
+import static statistics.formula.FormulaComponent.SECOND_ELEMENT;
+import static statistics.formula.FormulaComponent.SECOND_SQUARED;
 
 /**
  * PairFlatMapFunction implementation for Pearson correlation
@@ -28,14 +28,15 @@ public class PearsonStatisticMapper implements PairFlatMapFunction<EnergyDataPai
 	public Iterator<Tuple2<FormulaKey, FormulaValue>> call(EnergyDataPair pair) {
 		double x = pair.getEnergyValuePair().getFirstValue();
 		double y = pair.getEnergyValuePair().getSecondValue();
-		return Set.of(
+		Set<Tuple2<FormulaKey, FormulaValue>> set = Set.of(
 				createTuple(pair, COUNT, Double.valueOf(1)),
 				createTuple(pair, FIRST_ELEMENT, x),
 				createTuple(pair, SECOND_ELEMENT, y),
 				createTuple(pair, FIRST_SQUARED, pow(x, 2)),
 				createTuple(pair, SECOND_SQUARED, pow(x, y)),
 				createTuple(pair, PRODUCT, x * y)
-		).iterator();
+		);
+		return set.iterator();
 	}
 
 	private Tuple2<FormulaKey, FormulaValue> createTuple(EnergyDataPair pair, FormulaComponent component, double value) {
