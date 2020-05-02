@@ -55,13 +55,5 @@
 			<version>1.18.12</version>
 			<scope>provided</scope>
 		</dependency>
-
-
-		<!-- SPRING -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>5.2.5.RELEASE</version>
-		</dependency>
 	</dependencies>
 </project>

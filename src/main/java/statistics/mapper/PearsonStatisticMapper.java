@@ -33,7 +33,7 @@ public class PearsonStatisticMapper implements PairFlatMapFunction<EnergyDataPai
 				createTuple(pair, FIRST_ELEMENT, x),
 				createTuple(pair, SECOND_ELEMENT, y),
 				createTuple(pair, FIRST_SQUARED, pow(x, 2)),
-				createTuple(pair, SECOND_SQUARED, pow(x, y)),
+				createTuple(pair, SECOND_SQUARED, pow(y, 2)),
 				createTuple(pair, PRODUCT, x * y)
 		);
 		return set.iterator();
