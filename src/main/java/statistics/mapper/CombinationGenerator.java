@@ -1,10 +1,10 @@
 package statistics.mapper;
 
 import java.sql.Timestamp;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.spark.api.java.function.FlatMapFunction;
@@ -13,15 +13,15 @@ import org.paukov.combinatorics.CombinatoricsFactory;
 import org.paukov.combinatorics.Generator;
 import org.paukov.combinatorics.ICombinatoricsVector;
 
+import schema.CountryPair;
 import schema.EnergyData;
 import schema.EnergyDataPair;
 import schema.EnergyValuePair;
-import schema.CountryPair;
 
 /**
- * Maps the given input Row into a collection of country-wise combinations
+ * Maps the given input Row into a collection of combinations of every country pair
  */
-public class CombinationMapper implements FlatMapFunction<Row, EnergyDataPair> {
+public class CombinationGenerator implements FlatMapFunction<Row, EnergyDataPair> {
 
 	public static final int COMBINATIONS_LENGTH = 2;
 
@@ -32,7 +32,7 @@ public class CombinationMapper implements FlatMapFunction<Row, EnergyDataPair> {
 	 */
 	@Override
 	public Iterator<EnergyDataPair> call(Row row) {
-		Set<EnergyData> energyDataList = toEnergyValues(row);
+		Collection<EnergyData> energyDataList = toEnergyValues(row);
 		return generateCombinations(energyDataList).stream()
 				.map(this::toValuePair)
 				.collect(Collectors.toList())
@@ -44,8 +44,8 @@ public class CombinationMapper implements FlatMapFunction<Row, EnergyDataPair> {
 	 * @param row
 	 * @return
 	 */
-	private Set<EnergyData> toEnergyValues(Row row) {
-		Set<EnergyData> energyEntries = new HashSet<>();
+	private Collection<EnergyData> toEnergyValues(Row row) {
+		List<EnergyData> energyEntries = new ArrayList<>();
 		Timestamp timestamp = row.getTimestamp(0);
 		row.schema().toList().drop(1).foreach(field -> { // Drop timestamp and iterate over fields
 			String countryCode = field.name();
@@ -62,7 +62,7 @@ public class CombinationMapper implements FlatMapFunction<Row, EnergyDataPair> {
 	 * @param energyDataList
 	 * @return
 	 */
-	private List<ICombinatoricsVector<EnergyData>> generateCombinations(Set<EnergyData> energyDataList) {
+	private List<ICombinatoricsVector<EnergyData>> generateCombinations(Collection<EnergyData> energyDataList) {
 		ICombinatoricsVector<EnergyData> initialVector = CombinatoricsFactory.createVector(energyDataList);
 		Generator<EnergyData> generator = CombinatoricsFactory.createSimpleCombinationGenerator(initialVector, COMBINATIONS_LENGTH);
 		return generator.generateAllObjects();

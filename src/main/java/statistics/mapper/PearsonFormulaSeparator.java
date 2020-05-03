@@ -1,5 +1,6 @@
 package statistics.mapper;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -23,12 +24,12 @@ import static statistics.formula.FormulaComponent.SECOND_SQUARED;
  * PairFlatMapFunction implementation for Pearson correlation
  * Maps the given EnergyDataPair to formula components required for the Pearson statistic calculation
  */
-public class PearsonStatisticMapper implements PairFlatMapFunction<EnergyDataPair, FormulaKey, FormulaValue> {
+public class PearsonFormulaSeparator implements PairFlatMapFunction<EnergyDataPair, FormulaKey, FormulaValue> {
 
 	public Iterator<Tuple2<FormulaKey, FormulaValue>> call(EnergyDataPair pair) {
 		double x = pair.getEnergyValuePair().getFirstValue();
 		double y = pair.getEnergyValuePair().getSecondValue();
-		Set<Tuple2<FormulaKey, FormulaValue>> set = Set.of(
+		Collection<Tuple2<FormulaKey, FormulaValue>> collection = Set.of(
 				createTuple(pair, COUNT, Double.valueOf(1)),
 				createTuple(pair, FIRST_ELEMENT, x),
 				createTuple(pair, SECOND_ELEMENT, y),
@@ -36,7 +37,7 @@ public class PearsonStatisticMapper implements PairFlatMapFunction<EnergyDataPai
 				createTuple(pair, SECOND_SQUARED, pow(y, 2)),
 				createTuple(pair, PRODUCT, x * y)
 		);
-		return set.iterator();
+		return collection.iterator();
 	}
 
 	private Tuple2<FormulaKey, FormulaValue> createTuple(EnergyDataPair pair, FormulaComponent component, double value) {

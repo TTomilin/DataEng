@@ -18,7 +18,8 @@ public class FormulaValue implements Serializable {
 	private final FormulaComponent component;
 	private double value;
 
-	public void increaseValue(double value) {
+	public FormulaValue increase(double value) {
 		this.value += value;
+		return this;
 	}
 }

@@ -10,8 +10,8 @@ import statistics.formula.FormulaValue;
  */
 public class FormulaComponentSummator implements Function2<FormulaValue, FormulaValue, FormulaValue> {
 
+	@Override
 	public FormulaValue call(FormulaValue firstValue, FormulaValue secondValue) {
-		return new FormulaValue(firstValue.getTimestamp(), firstValue.getCountryPair(),
-				firstValue.getComponent(), firstValue.getValue() + secondValue.getValue());
+		return firstValue.increase(secondValue.getValue());
 	}
 }

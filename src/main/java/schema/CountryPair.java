@@ -3,12 +3,10 @@ package schema;
 import java.util.Comparator;
 
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import scala.Serializable;
 
 @Getter
-@EqualsAndHashCode
 @AllArgsConstructor
 public class CountryPair implements Serializable, Comparator<CountryPair> {
 
@@ -17,7 +15,24 @@ public class CountryPair implements Serializable, Comparator<CountryPair> {
 
 	@Override
 	public String toString() {
-		return String.format("(%s, %s)", firstCountry, secondCountry);
+		return String.format("Countries (%s, %s)", firstCountry, secondCountry);
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (object == this){
+			return true;
+		} else if (!(object instanceof CountryPair)) {
+			return false;
+		}
+		CountryPair other = (CountryPair) object;
+		return other.firstCountry.equals(firstCountry) && other.secondCountry.equals(secondCountry) ||
+				other.firstCountry.equals(secondCountry) && other.secondCountry.equals(firstCountry);
+	}
+
+	@Override
+	public int hashCode() {
+		return firstCountry.hashCode() + secondCountry.hashCode();
 	}
 
 	@Override

@@ -22,8 +22,7 @@ import static statistics.formula.FormulaComponent.SECOND_SQUARED;
  */
 public class PearsonStatisticComputer implements Function<Map<FormulaComponent, FormulaValue>, Double> {
 
-	private static final int PRECISION = 5;
-	private final MathContext mathContext = new MathContext(PRECISION);
+	private final MathContext mathContext = MathContext.DECIMAL64;
 
 	@Override
 	public Double call(Map<FormulaComponent, FormulaValue> formulaComponents) {
@@ -39,6 +38,6 @@ public class PearsonStatisticComputer implements Function<Map<FormulaComponent, 
 		BigDecimal right = count.multiply(sumYSquared).subtract(sumY.pow(2)).sqrt(mathContext);
 		BigDecimal denominator = left.multiply(right);
 
-		return numerator.divide(denominator).doubleValue();
+		return numerator.divide(denominator, mathContext).doubleValue();
 	}
 }
