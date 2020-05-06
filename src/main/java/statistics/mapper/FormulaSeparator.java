@@ -13,8 +13,9 @@ import statistics.formula.FormulaComponentType;
 import statistics.formula.FormulaComponentValue;
 
 /**
- * Implement this abstract separator for a specific correlation
- * type to split up the formula and store its components separately
+ * Abstract separator of a correlation formula
+ * Implement the separation of the necessary formula components
+ * for a specific correlation to store its components separately
  */
 public abstract class FormulaSeparator implements PairFlatMapFunction<EnergyDataPair, FormulaComponentKey, FormulaComponentValue> {
 

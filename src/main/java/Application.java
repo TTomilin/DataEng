@@ -3,24 +3,23 @@ import java.util.Arrays;
 import data.DataFile;
 import scala.Tuple2;
 import schema.CountryPair;
-import statistics.StatisticsManager;
+import statistics.PearsonCorrelationManager;
+import statistics.SpearmanCorrelationManager;
 
 import static data.DataFile.SOLAR;
 import static data.DataFile.WIND;
-import static data.DataFile.WIND_100ROWS;
-import static data.DataFile.WIND_10ROWS_3COUNTRIES;
 
 public class Application {
 
-	private static StatisticsManager manager;
+	private static PearsonCorrelationManager pearson = new PearsonCorrelationManager();
+	private static SpearmanCorrelationManager spearman = new SpearmanCorrelationManager();
 
 	public static void main(String[] args) {
 		setHadoopHome(args);
-		manager = new StatisticsManager();
-		spearmanCorrelation(WIND);
-//		pearsonCorrelation(WIND_100ROWS);
 		pearsonCorrelation(WIND);
-//		pearsonCorrelation(SOLAR);
+		spearmanCorrelation(WIND);
+		pearsonCorrelation(SOLAR);
+		spearmanCorrelation(SOLAR);
 	}
 
 	private static void setHadoopHome(String[] args) {
@@ -31,11 +30,11 @@ public class Application {
 	}
 
 	private static void spearmanCorrelation(DataFile type) {
-		manager.spearmanCorrelations(type).forEach(Application::logCorrelation);
+		spearman.calculateCorrelations(type).forEach(Application::logCorrelation);
 	}
 
 	private static void pearsonCorrelation(DataFile type) {
-		manager.pearsonCorrelations(type).forEach(Application::logCorrelation);
+		pearson.calculateCorrelations(type).forEach(Application::logCorrelation);
 	}
 
 	private static void logCorrelation(Tuple2<CountryPair, Double> tuple) {
