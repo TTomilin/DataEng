@@ -6,8 +6,8 @@ import java.util.Iterator;
 import org.apache.spark.api.java.function.PairFlatMapFunction;
 
 import scala.Tuple2;
-import schema.EnergyDataPair;
-import schema.EnergyValuePair;
+import schema.DataEntryPair;
+import schema.CorrelationMeasurePair;
 import statistics.formula.FormulaComponentKey;
 import statistics.formula.FormulaComponentType;
 import statistics.formula.FormulaComponentValue;
@@ -17,20 +17,20 @@ import statistics.formula.FormulaComponentValue;
  * Implement the separation of the necessary formula components
  * for a specific correlation to store its components separately
  */
-public abstract class FormulaSeparator implements PairFlatMapFunction<EnergyDataPair, FormulaComponentKey, FormulaComponentValue> {
+public abstract class FormulaSeparator implements PairFlatMapFunction<DataEntryPair, FormulaComponentKey, FormulaComponentValue> {
 
 	/**
-	 * Maps the given EnergyDataPair to formula components required for the statistic calculation
+	 * Maps the given DataEntryPair to formula components required for the statistic calculation
 	 * @param pair
 	 * @return
 	 */
 	@Override
-	public Iterator<Tuple2<FormulaComponentKey, FormulaComponentValue>> call(EnergyDataPair pair) {
-		EnergyValuePair valuePair = pair.getEnergyValuePair();
+	public Iterator<Tuple2<FormulaComponentKey, FormulaComponentValue>> call(DataEntryPair pair) {
+		CorrelationMeasurePair valuePair = pair.getCorrelationMeasurePair();
 		double x = valuePair.getFirstValue();
 		double y = valuePair.getSecondValue();
 		return getFormulaComponents(x, y).stream()
-				.map(tuple -> createTuple2(pair, tuple))
+				.map(component -> createTuple(pair, component))
 				.iterator();
 	}
 
@@ -49,7 +49,7 @@ public abstract class FormulaSeparator implements PairFlatMapFunction<EnergyData
 	 * @param componentTuple
 	 * @return
 	 */
-	protected Tuple2<FormulaComponentKey, FormulaComponentValue> createTuple2(EnergyDataPair pair, Tuple2<FormulaComponentType, Double> componentTuple) {
+	protected Tuple2<FormulaComponentKey, FormulaComponentValue> createTuple(DataEntryPair pair, Tuple2<FormulaComponentType, Double> componentTuple) {
 		FormulaComponentType component = componentTuple._1();
 		FormulaComponentKey key = new FormulaComponentKey(pair.getCountryPair(), component);
 		FormulaComponentValue formulaComponentValue = new FormulaComponentValue(pair.getTimestamp(), pair.getCountryPair(), component, componentTuple._2());

@@ -20,6 +20,8 @@ public class SpearmanStatisticComputer extends StatisticComputer {
 		double count = formulaComponents.get(COUNT).getValue();
 		double diffSquared = formulaComponents.get(DIFF_SQUARED).getValue();
 
-		return 1 - 6 * diffSquared / count * (pow(count, 2) - 1);
+		double num = 6 * diffSquared;
+		double denom = count * (pow(count, 2) - 1);
+		return 1 - num / denom;
 	}
 }

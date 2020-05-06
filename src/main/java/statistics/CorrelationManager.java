@@ -10,9 +10,11 @@ import data.DataFile;
 import scala.Serializable;
 import scala.Tuple2;
 import schema.CountryPair;
-import schema.EnergyDataPair;
+import schema.DataEntry;
 import session.SessionWrapper;
+import statistics.mapper.CombinationGenerator;
 import statistics.mapper.CountryPairWrapper;
+import statistics.mapper.EnergyDataConverter;
 import statistics.mapper.FormulaSeparator;
 import statistics.mapper.StatisticComputer;
 import statistics.reducer.FormulaComponentAggregator;
@@ -25,12 +27,14 @@ public abstract class CorrelationManager implements ICorrelationManager, Seriali
 	private FormulaComponentSummator componentSummator = new FormulaComponentSummator();
 	private CountryPairWrapper countryPairWrapper = new CountryPairWrapper();
 	private FormulaComponentAggregator componentAggregator = new FormulaComponentAggregator();
+	private EnergyDataConverter converter = new EnergyDataConverter();
 
 	@Override
 	public Collection<Tuple2<CountryPair, Double>> calculateCorrelations(DataFile dataFile) {
-		JavaRDD<Row> rdd = getRowJavaRDD(dataFile);
-		JavaRDD<EnergyDataPair> dataPairs = preprocess(rdd);
-		return dataPairs
+		JavaRDD<DataEntry> javaRDD = getDataEntryJavaRDD(dataFile);
+		return applyRanking(javaRDD)
+				.groupBy(DataEntry::getTimestamp)
+				.flatMap(getCombinationGenerator())
 				.flatMapToPair(getFormulaSeparator())
 				.reduceByKey(componentSummator)
 				.mapToPair(countryPairWrapper)
@@ -40,18 +44,25 @@ public abstract class CorrelationManager implements ICorrelationManager, Seriali
 				.collect();
 	}
 
-	protected abstract JavaRDD<EnergyDataPair> preprocess(JavaRDD<Row> rdd);
+	protected abstract JavaRDD<DataEntry> applyRanking(JavaRDD<DataEntry> javaRDD);
+	protected abstract CombinationGenerator getCombinationGenerator();
 	protected abstract FormulaSeparator getFormulaSeparator();
 	protected abstract StatisticComputer getStatisticComputer();
 
-	private JavaRDD<Row> getRowJavaRDD(DataFile dataFile) {
+	protected boolean valueProvided(DataEntry data) {
+		return data.getValue() != 0;
+	}
+
+	private JavaRDD<DataEntry> getDataEntryJavaRDD(DataFile dataFile) {
 		return SessionWrapper.getSession().read()
 				.format("csv")
 				.option("header", "true")
 				.option("inferSchema", "true")
 				.load(String.format(PATH_TEMPLATE, dataFile.getFileName()))
 				.filter((FilterFunction<Row>) row -> !row.anyNull()) // Prevent Spark from reading superfluous rows
-				.javaRDD();
+				.javaRDD()
+				.flatMap(converter)
+				.filter(this::valueProvided);
 	}
 
 	private boolean applyThreshold(Tuple2<CountryPair, Double> tuple) {

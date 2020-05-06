@@ -3,11 +3,15 @@ import java.util.Arrays;
 import data.DataFile;
 import scala.Tuple2;
 import schema.CountryPair;
+import session.SessionWrapper;
+import statistics.CorrelationType;
 import statistics.PearsonCorrelationManager;
 import statistics.SpearmanCorrelationManager;
 
 import static data.DataFile.SOLAR;
 import static data.DataFile.WIND;
+import static statistics.CorrelationType.PEARSON;
+import static statistics.CorrelationType.SPEARMAN;
 
 public class Application {
 
@@ -16,6 +20,7 @@ public class Application {
 
 	public static void main(String[] args) {
 		setHadoopHome(args);
+		SessionWrapper.setLogLevel("WARN");
 		pearsonCorrelation(WIND);
 		spearmanCorrelation(WIND);
 		pearsonCorrelation(SOLAR);
@@ -29,12 +34,19 @@ public class Application {
 		}
 	}
 
-	private static void spearmanCorrelation(DataFile type) {
-		spearman.calculateCorrelations(type).forEach(Application::logCorrelation);
+	private static void pearsonCorrelation(DataFile file) {
+		logCorrelationStart(PEARSON, file);
+		pearson.calculateCorrelations(file).forEach(Application::logCorrelation);
 	}
 
-	private static void pearsonCorrelation(DataFile type) {
-		pearson.calculateCorrelations(type).forEach(Application::logCorrelation);
+	private static void spearmanCorrelation(DataFile file) {
+		logCorrelationStart(SPEARMAN, file);
+		spearman.calculateCorrelations(file).forEach(Application::logCorrelation);
+	}
+
+	private static void logCorrelationStart(CorrelationType type, DataFile file) {
+		System.out.println();
+		System.out.println(String.format("Calculating %s correlation of %s data", type, file));
 	}
 
 	private static void logCorrelation(Tuple2<CountryPair, Double> tuple) {

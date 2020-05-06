@@ -21,6 +21,10 @@ public class SessionWrapper {
 		return session;
 	}
 
+	public static void setLogLevel(String logLevel) {
+		getSession().sparkContext().setLogLevel(logLevel);
+	}
+
 	private static SparkConf getSparkConfig() {
 		return new SparkConf()
 				.setAppName("DataEng")

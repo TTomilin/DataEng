@@ -9,9 +9,9 @@ import lombok.ToString;
 @Getter
 @ToString
 @AllArgsConstructor
-public class EnergyDataPair {
+public class DataEntryPair {
 
 	private final Timestamp timestamp;
 	private final CountryPair countryPair;
-	private final EnergyValuePair energyValuePair;
+	private final CorrelationMeasurePair correlationMeasurePair;
 }
