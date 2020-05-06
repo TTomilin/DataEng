@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Map;
 
-import org.apache.spark.api.java.function.Function;
-
 import statistics.formula.FormulaComponentType;
 import statistics.formula.FormulaComponentValue;
 
@@ -18,9 +16,9 @@ import static statistics.formula.FormulaComponentType.SECOND_SQUARED;
 
 /**
  * Computes the correlation statistic given a map of respectively summed up formula components
- * Utilizes the pearson correlation formula
+ * Utilizes the Pearson correlation formula
  */
-public class PearsonStatisticComputer implements Function<Map<FormulaComponentType, FormulaComponentValue>, Double> {
+public class PearsonStatisticComputer extends StatisticComputer {
 
 	private final MathContext mathContext = MathContext.DECIMAL64;
 
