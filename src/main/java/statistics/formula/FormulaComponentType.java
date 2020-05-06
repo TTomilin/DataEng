@@ -1,6 +1,6 @@
 package statistics.formula;
 
-public enum FormulaComponent {
+public enum FormulaComponentType {
 	COUNT,
 	FIRST_ELEMENT,
 	SECOND_ELEMENT,

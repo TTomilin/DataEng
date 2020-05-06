@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.ToString;
 import scala.Serializable;
 
@@ -12,7 +13,7 @@ import scala.Serializable;
 @AllArgsConstructor
 public class EnergyData implements Serializable {
 
-	private final Timestamp timestamp;
-	private final String country;
-	private double value;
+	@NonNull private final Timestamp timestamp;
+	@NonNull private final String country;
+	@NonNull private final double value;
 }

@@ -1,12 +1,13 @@
 import java.util.Arrays;
 
-import data.EnergyType;
+import data.DataFile;
 import scala.Tuple2;
 import schema.CountryPair;
 import statistics.StatisticsManager;
 
-import static data.EnergyType.SOLAR;
-import static data.EnergyType.WIND;
+import static data.DataFile.SOLAR;
+import static data.DataFile.WIND;
+import static data.DataFile.WIND_10ROWS_3COUNTRIES;
 
 public class Application {
 
@@ -15,8 +16,9 @@ public class Application {
 	public static void main(String[] args) {
 		setHadoopHome(args);
 		manager = new StatisticsManager();
-		pearsonCorrelation(WIND);
-		pearsonCorrelation(SOLAR);
+		manager.spearmanCorrelations(WIND_10ROWS_3COUNTRIES);
+//		pearsonCorrelation(WIND);
+//		pearsonCorrelation(SOLAR);
 	}
 
 	private static void setHadoopHome(String[] args) {
@@ -26,7 +28,7 @@ public class Application {
 		}
 	}
 
-	private static void pearsonCorrelation(EnergyType type) {
+	private static void pearsonCorrelation(DataFile type) {
 		manager.pearsonCorrelations(type).forEach(Application::logCorrelation);
 	}
 

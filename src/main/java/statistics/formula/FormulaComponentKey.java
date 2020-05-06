@@ -11,8 +11,8 @@ import schema.CountryPair;
 @ToString
 @EqualsAndHashCode
 @AllArgsConstructor
-public class FormulaKey implements Serializable {
+public class FormulaComponentKey implements Serializable {
 
 	private final CountryPair countryPair;
-	private final FormulaComponent component;
+	private final FormulaComponentType component;
 }

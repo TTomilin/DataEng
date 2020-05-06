@@ -11,14 +11,14 @@ import schema.CountryPair;
 @Getter
 @ToString
 @AllArgsConstructor
-public class FormulaValue implements Serializable {
+public class FormulaComponentValue implements Serializable {
 
 	private final Timestamp timestamp;
 	private final CountryPair countryPair;
-	private final FormulaComponent component;
+	private final FormulaComponentType component;
 	private double value;
 
-	public FormulaValue increase(double value) {
+	public FormulaComponentValue increase(double value) {
 		this.value += value;
 		return this;
 	}

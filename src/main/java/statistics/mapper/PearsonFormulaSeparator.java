@@ -8,28 +8,28 @@ import org.apache.spark.api.java.function.PairFlatMapFunction;
 
 import scala.Tuple2;
 import schema.EnergyDataPair;
-import statistics.formula.FormulaComponent;
-import statistics.formula.FormulaKey;
-import statistics.formula.FormulaValue;
+import statistics.formula.FormulaComponentType;
+import statistics.formula.FormulaComponentKey;
+import statistics.formula.FormulaComponentValue;
 
 import static java.lang.Math.pow;
-import static statistics.formula.FormulaComponent.COUNT;
-import static statistics.formula.FormulaComponent.FIRST_ELEMENT;
-import static statistics.formula.FormulaComponent.FIRST_SQUARED;
-import static statistics.formula.FormulaComponent.PRODUCT;
-import static statistics.formula.FormulaComponent.SECOND_ELEMENT;
-import static statistics.formula.FormulaComponent.SECOND_SQUARED;
+import static statistics.formula.FormulaComponentType.COUNT;
+import static statistics.formula.FormulaComponentType.FIRST_ELEMENT;
+import static statistics.formula.FormulaComponentType.FIRST_SQUARED;
+import static statistics.formula.FormulaComponentType.PRODUCT;
+import static statistics.formula.FormulaComponentType.SECOND_ELEMENT;
+import static statistics.formula.FormulaComponentType.SECOND_SQUARED;
 
 /**
  * PairFlatMapFunction implementation for Pearson correlation
  * Maps the given EnergyDataPair to formula components required for the Pearson statistic calculation
  */
-public class PearsonFormulaSeparator implements PairFlatMapFunction<EnergyDataPair, FormulaKey, FormulaValue> {
+public class PearsonFormulaSeparator implements PairFlatMapFunction<EnergyDataPair, FormulaComponentKey, FormulaComponentValue> {
 
-	public Iterator<Tuple2<FormulaKey, FormulaValue>> call(EnergyDataPair pair) {
+	public Iterator<Tuple2<FormulaComponentKey, FormulaComponentValue>> call(EnergyDataPair pair) {
 		double x = pair.getEnergyValuePair().getFirstValue();
 		double y = pair.getEnergyValuePair().getSecondValue();
-		Collection<Tuple2<FormulaKey, FormulaValue>> collection = Set.of(
+		Collection<Tuple2<FormulaComponentKey, FormulaComponentValue>> collection = Set.of(
 				createTuple(pair, COUNT, Double.valueOf(1)),
 				createTuple(pair, FIRST_ELEMENT, x),
 				createTuple(pair, SECOND_ELEMENT, y),
@@ -40,9 +40,9 @@ public class PearsonFormulaSeparator implements PairFlatMapFunction<EnergyDataPa
 		return collection.iterator();
 	}
 
-	private Tuple2<FormulaKey, FormulaValue> createTuple(EnergyDataPair pair, FormulaComponent component, double value) {
-		FormulaKey key = new FormulaKey(pair.getCountryPair(), component);
-		FormulaValue formulaValue = new FormulaValue(pair.getTimestamp(), pair.getCountryPair(), component, value);
-		return new Tuple2<>(key, formulaValue);
+	private Tuple2<FormulaComponentKey, FormulaComponentValue> createTuple(EnergyDataPair pair, FormulaComponentType component, double value) {
+		FormulaComponentKey key = new FormulaComponentKey(pair.getCountryPair(), component);
+		FormulaComponentValue formulaComponentValue = new FormulaComponentValue(pair.getTimestamp(), pair.getCountryPair(), component, value);
+		return new Tuple2<>(key, formulaComponentValue);
 	}
 }

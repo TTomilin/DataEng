@@ -1,49 +1,100 @@
 package statistics;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.FilterFunction;
 import org.apache.spark.sql.Row;
 
-import data.EnergyType;
+import data.DataFile;
 import scala.Serializable;
 import scala.Tuple2;
 import schema.CountryPair;
 import schema.EnergyDataPair;
+import schema.RankedEnergyData;
 import session.SessionWrapper;
 import statistics.mapper.CombinationGenerator;
 import statistics.mapper.CountryPairWrapper;
-import statistics.mapper.PearsonStatisticComputer;
 import statistics.mapper.PearsonFormulaSeparator;
+import statistics.mapper.PearsonStatisticComputer;
 import statistics.reducer.FormulaComponentAggregator;
 import statistics.reducer.FormulaComponentSummator;
 
-public class StatisticsManager implements Serializable {
+public class StatisticsManager implements IManager, Serializable {
 
 	private static final double THRESHOLD = 0.5;
 	private static final String PATH_TEMPLATE = "src/main/resources/energy-data/%s.csv";
+	private CombinationGenerator combinationGenerator = new CombinationGenerator();
+	private PearsonFormulaSeparator formulaSeparator = new PearsonFormulaSeparator();
+	private FormulaComponentSummator componentSummator = new FormulaComponentSummator();
+	private CountryPairWrapper countryPairWrapper = new CountryPairWrapper();
+	private FormulaComponentAggregator componentAggregator = new FormulaComponentAggregator();
+	private PearsonStatisticComputer statisticComputer = new PearsonStatisticComputer();
 
-	public Collection<Tuple2<CountryPair, Double>> pearsonCorrelations(EnergyType energyType) {
+	@Override
+	public Collection<Tuple2<CountryPair, Double>> correlations(CorrelationType correlationType, DataFile dataFile) {
+		return null;
+	}
+
+	public Collection<Tuple2<CountryPair, Double>> spearmanCorrelations(DataFile dataFile) {
+		List<Tuple2<String, Iterable<RankedEnergyData>>> list = getJavaRDDStream(dataFile)
+				.flatMap(this::toEnergyValues)
+				.sortBy(data -> data.getValue(), true, 5)
+				.groupBy(data -> data.getCountry())
+				.map(this::rank)
+				.collect();
+		return null;
+	}
+
+	public Collection<Tuple2<CountryPair, Double>> pearsonCorrelations(DataFile dataFile) {
+		return getJavaRDDStream(dataFile)
+				.flatMap(combinationGenerator)
+				.filter(this::bothValuesProvided)
+				.flatMapToPair(formulaSeparator)
+				.reduceByKey(componentSummator)
+				.mapToPair(countryPairWrapper)
+				.reduceByKey(componentAggregator)
+				.mapValues(statisticComputer)
+				.filter(this::applyThreshold) // Temporarily removed to display all values
+				.collect();
+	}
+
+	private JavaRDD<Row> getJavaRDDStream(DataFile dataFile) {
 		return SessionWrapper.getSession().read()
 				.format("csv")
 				.option("header", "true")
 				.option("inferSchema", "true")
-				.load(String.format(PATH_TEMPLATE, energyType.getFileName()))
+				.load(String.format(PATH_TEMPLATE, dataFile.getFileName()))
 				.filter((FilterFunction<Row>) row -> !row.anyNull()) // To prevent spark from reading superfluous rows
-				.javaRDD()
-				.flatMap(new CombinationGenerator())
-				.filter(this::bothValuesGiven)
-				.flatMapToPair(new PearsonFormulaSeparator())
-				.reduceByKey(new FormulaComponentSummator())
-				.mapToPair(new CountryPairWrapper())
-				.reduceByKey(new FormulaComponentAggregator())
-				.mapValues(new PearsonStatisticComputer())
-//				.filter(this::applyThreshold) // Temporarily removed to display all values
-				.collect();
+				.javaRDD();
 	}
 
-	private boolean bothValuesGiven(EnergyDataPair pair) {
+	private boolean bothValuesProvided(EnergyDataPair pair) {
 		return pair.getEnergyValuePair().bothValuesPresent();
+	}
+
+	private Iterator<RankedEnergyData> toEnergyValues(Row row) {
+		List<RankedEnergyData> energyEntries = new ArrayList<>();
+		Timestamp timestamp = row.getTimestamp(0);
+		row.schema().toList().drop(1).foreach(field -> { // Drop timestamp and iterate over fields
+			String countryCode = field.name();
+			Double value = row.getAs(countryCode);
+			RankedEnergyData energyData = new RankedEnergyData(timestamp, countryCode, value);
+			energyEntries.add(energyData);
+			return energyData;
+		});
+		return energyEntries.iterator();
+	}
+
+	public Tuple2<String, Iterable<RankedEnergyData>> rank(Tuple2<String, Iterable<RankedEnergyData>> tuples) {
+		AtomicInteger count = new AtomicInteger();
+		tuples._2().forEach(data -> data.setRank(count.incrementAndGet()));
+		return tuples;
 	}
 
 	private boolean applyThreshold(Tuple2<CountryPair, Double> tuple) {
