@@ -15,11 +15,13 @@ import data.DataFile;
 import scala.Serializable;
 import scala.Tuple2;
 import schema.CountryPair;
+import schema.EnergyData;
 import schema.EnergyDataPair;
 import schema.RankedEnergyData;
 import session.SessionWrapper;
 import statistics.mapper.CombinationGenerator;
 import statistics.mapper.CountryPairWrapper;
+import statistics.mapper.NewCombinationGenerator;
 import statistics.mapper.PearsonFormulaSeparator;
 import statistics.mapper.PearsonStatisticComputer;
 import statistics.reducer.FormulaComponentAggregator;
@@ -29,6 +31,7 @@ public class StatisticsManager implements IManager, Serializable {
 
 	private static final double THRESHOLD = 0.5;
 	private static final String PATH_TEMPLATE = "src/main/resources/energy-data/%s.csv";
+	public static final int NUM_PARTITIONS = 10;
 	private CombinationGenerator combinationGenerator = new CombinationGenerator();
 	private PearsonFormulaSeparator formulaSeparator = new PearsonFormulaSeparator();
 	private FormulaComponentSummator componentSummator = new FormulaComponentSummator();
@@ -42,11 +45,14 @@ public class StatisticsManager implements IManager, Serializable {
 	}
 
 	public Collection<Tuple2<CountryPair, Double>> spearmanCorrelations(DataFile dataFile) {
-		List<Tuple2<String, Iterable<RankedEnergyData>>> list = getJavaRDDStream(dataFile)
+		getJavaRDDStream(dataFile)
 				.flatMap(this::toEnergyValues)
-				.sortBy(data -> data.getValue(), true, 5)
-				.groupBy(data -> data.getCountry())
+				.sortBy(EnergyData::getValue, true, NUM_PARTITIONS)
+				.groupBy(EnergyData::getCountry)
 				.map(this::rank)
+				.flatMap(data -> data._2().iterator())
+				.groupBy(EnergyData::getTimestamp)
+				.mapValues(new NewCombinationGenerator())
 				.collect();
 		return null;
 	}
