@@ -1,17 +1,19 @@
 package statistics.mapper;
 
+import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.IterableUtils;
-import org.apache.spark.api.java.function.Function;
+import org.apache.spark.api.java.function.FlatMapFunction;
 import org.paukov.combinatorics.CombinatoricsFactory;
 import org.paukov.combinatorics.Generator;
 import org.paukov.combinatorics.ICombinatoricsVector;
 
+import scala.Tuple2;
 import schema.CountryPair;
-import schema.EnergyData;
 import schema.EnergyDataPair;
 import schema.EnergyValuePair;
 import schema.RankedEnergyData;
@@ -19,20 +21,21 @@ import schema.RankedEnergyData;
 /**
  * Maps the given collection of RankedEnergyData into a collection of combinations of every country pair
  */
-public class NewCombinationGenerator implements Function<Iterable<RankedEnergyData>, Iterable<EnergyDataPair>> {
+public class NewCombinationGenerator implements FlatMapFunction<Tuple2<Timestamp, Iterable<RankedEnergyData>>, EnergyDataPair> {
 
 	public static final int COMBINATIONS_LENGTH = 2;
 
 	/**
-	 * @param energyData
+	 * @param tuple
 	 * @return
 	 */
 	@Override
-	public Iterable<EnergyDataPair> call(Iterable<RankedEnergyData> energyData) {
-		Collection<RankedEnergyData> objects = IterableUtils.toList(energyData);
+	public Iterator<EnergyDataPair> call(Tuple2<Timestamp, Iterable<RankedEnergyData>> tuple) {
+		Collection<RankedEnergyData> objects = IterableUtils.toList(tuple._2());
 		return generateCombinations(objects).stream()
 				.map(this::toValuePair)
-				.collect(Collectors.toList());
+				.collect(Collectors.toList())
+				.iterator();
 	}
 
 	/**
@@ -40,9 +43,9 @@ public class NewCombinationGenerator implements Function<Iterable<RankedEnergyDa
 	 * @param energyDataList
 	 * @return
 	 */
-	private List<ICombinatoricsVector<EnergyData>> generateCombinations(Collection<RankedEnergyData> energyDataList) {
-		ICombinatoricsVector<EnergyData> initialVector = CombinatoricsFactory.createVector(energyDataList);
-		Generator<EnergyData> generator = CombinatoricsFactory.createSimpleCombinationGenerator(initialVector, COMBINATIONS_LENGTH);
+	private List<ICombinatoricsVector<RankedEnergyData>> generateCombinations(Collection<RankedEnergyData> energyDataList) {
+		ICombinatoricsVector<RankedEnergyData> initialVector = CombinatoricsFactory.createVector(energyDataList);
+		Generator<RankedEnergyData> generator = CombinatoricsFactory.createSimpleCombinationGenerator(initialVector, COMBINATIONS_LENGTH);
 		return generator.generateAllObjects();
 	}
 
@@ -51,11 +54,11 @@ public class NewCombinationGenerator implements Function<Iterable<RankedEnergyDa
 	 * @param vector
 	 * @return
 	 */
-	private EnergyDataPair toValuePair(ICombinatoricsVector<EnergyData> vector) {
-		EnergyData firstValue = vector.getValue(0);
-		EnergyData secondValue = vector.getValue(1);
-		return new EnergyDataPair(firstValue.getTimestamp(),
-				new CountryPair(firstValue.getCountry(), secondValue.getCountry()),
-				new EnergyValuePair(firstValue.getValue(), secondValue.getValue()));
+	private EnergyDataPair toValuePair(ICombinatoricsVector<RankedEnergyData> vector) {
+		RankedEnergyData firstEntry = vector.getValue(0);
+		RankedEnergyData secondEntry = vector.getValue(1);
+		return new EnergyDataPair(firstEntry.getTimestamp(),
+				new CountryPair(firstEntry.getCountry(), secondEntry.getCountry()),
+				new EnergyValuePair(firstEntry.getRank(), secondEntry.getRank()));
 	}
 }

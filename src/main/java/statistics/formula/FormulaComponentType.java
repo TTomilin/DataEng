@@ -6,5 +6,6 @@ public enum FormulaComponentType {
 	SECOND_ELEMENT,
 	FIRST_SQUARED,
 	SECOND_SQUARED,
-	PRODUCT
+	PRODUCT,
+	DIFF_SQUARED
 }

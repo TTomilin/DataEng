@@ -15,5 +15,5 @@ public class EnergyData implements Serializable {
 
 	@NonNull private final Timestamp timestamp;
 	@NonNull private final String country;
-	@NonNull private final double value;
+	private final double value;
 }

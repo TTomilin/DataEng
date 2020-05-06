@@ -24,6 +24,7 @@ import statistics.mapper.CountryPairWrapper;
 import statistics.mapper.NewCombinationGenerator;
 import statistics.mapper.PearsonFormulaSeparator;
 import statistics.mapper.PearsonStatisticComputer;
+import statistics.mapper.SpearmanSimpleFormulaSeparator;
 import statistics.reducer.FormulaComponentAggregator;
 import statistics.reducer.FormulaComponentSummator;
 
@@ -47,12 +48,15 @@ public class StatisticsManager implements IManager, Serializable {
 	public Collection<Tuple2<CountryPair, Double>> spearmanCorrelations(DataFile dataFile) {
 		getJavaRDDStream(dataFile)
 				.flatMap(this::toEnergyValues)
+				.filter(this::valueProvided)
 				.sortBy(EnergyData::getValue, true, NUM_PARTITIONS)
 				.groupBy(EnergyData::getCountry)
 				.map(this::rank)
 				.flatMap(data -> data._2().iterator())
 				.groupBy(EnergyData::getTimestamp)
-				.mapValues(new NewCombinationGenerator())
+				.flatMap(new NewCombinationGenerator())
+				.flatMapToPair(new SpearmanSimpleFormulaSeparator())
+				.reduceByKey(componentSummator)
 				.collect();
 		return null;
 	}
@@ -80,6 +84,9 @@ public class StatisticsManager implements IManager, Serializable {
 				.javaRDD();
 	}
 
+	private boolean valueProvided(EnergyData data) {
+		return data.getValue() != 0;
+	}
 	private boolean bothValuesProvided(EnergyDataPair pair) {
 		return pair.getEnergyValuePair().bothValuesPresent();
 	}

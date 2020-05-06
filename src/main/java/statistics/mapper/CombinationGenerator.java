@@ -74,10 +74,10 @@ public class CombinationGenerator implements FlatMapFunction<Row, EnergyDataPair
 	 * @return
 	 */
 	private EnergyDataPair toValuePair(ICombinatoricsVector<EnergyData> vector) {
-		EnergyData firstValue = vector.getValue(0);
-		EnergyData secondValue = vector.getValue(1);
-		return new EnergyDataPair(firstValue.getTimestamp(),
-				new CountryPair(firstValue.getCountry(), secondValue.getCountry()),
-				new EnergyValuePair(firstValue.getValue(), secondValue.getValue()));
+		EnergyData firstEntry = vector.getValue(0);
+		EnergyData secondEntry = vector.getValue(1);
+		return new EnergyDataPair(firstEntry.getTimestamp(),
+				new CountryPair(firstEntry.getCountry(), secondEntry.getCountry()),
+				new EnergyValuePair(firstEntry.getValue(), secondEntry.getValue()));
 	}
 }
