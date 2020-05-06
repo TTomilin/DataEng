@@ -1,12 +1,14 @@
 import java.util.Arrays;
 
+import static org.apache.log4j.lf5.LogLevel.WARN;
+
 import data.DataFile;
 import scala.Tuple2;
 import schema.CountryPair;
 import session.SessionWrapper;
 import statistics.CorrelationType;
-import statistics.PearsonCorrelationManager;
-import statistics.SpearmanCorrelationManager;
+import statistics.manager.PearsonCorrelationManager;
+import statistics.manager.SpearmanCorrelationManager;
 
 import static data.DataFile.SOLAR;
 import static data.DataFile.WIND;
@@ -20,7 +22,7 @@ public class Application {
 
 	public static void main(String[] args) {
 		setHadoopHome(args);
-		SessionWrapper.setLogLevel("WARN");
+		SessionWrapper.setLogLevel(WARN);
 		pearsonCorrelation(WIND);
 		spearmanCorrelation(WIND);
 		pearsonCorrelation(SOLAR);

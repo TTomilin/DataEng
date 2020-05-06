@@ -1,4 +1,4 @@
-package statistics;
+package statistics.manager;
 
 import java.util.Collection;
 
