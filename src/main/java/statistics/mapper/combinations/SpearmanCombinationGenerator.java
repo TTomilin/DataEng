@@ -1,4 +1,4 @@
-package statistics.mapper;
+package statistics.mapper.combinations;
 
 import schema.DataEntry;
 

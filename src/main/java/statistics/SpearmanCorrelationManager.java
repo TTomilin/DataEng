@@ -6,12 +6,12 @@ import org.apache.spark.api.java.JavaRDD;
 
 import scala.Tuple2;
 import schema.DataEntry;
-import statistics.mapper.CombinationGenerator;
-import statistics.mapper.FormulaSeparator;
-import statistics.mapper.SpearmanCombinationGenerator;
-import statistics.mapper.SpearmanFormulaSeparator;
-import statistics.mapper.SpearmanStatisticComputer;
-import statistics.mapper.StatisticComputer;
+import statistics.mapper.combinations.CombinationGenerator;
+import statistics.mapper.separation.FormulaSeparator;
+import statistics.mapper.combinations.SpearmanCombinationGenerator;
+import statistics.mapper.separation.SpearmanFormulaSeparator;
+import statistics.mapper.computation.SpearmanStatisticComputer;
+import statistics.mapper.computation.StatisticComputer;
 
 public class SpearmanCorrelationManager extends CorrelationManager {
 

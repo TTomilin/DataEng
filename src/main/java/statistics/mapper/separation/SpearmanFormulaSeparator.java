@@ -1,4 +1,4 @@
-package statistics.mapper;
+package statistics.mapper.separation;
 
 import java.util.Collection;
 import java.util.Set;

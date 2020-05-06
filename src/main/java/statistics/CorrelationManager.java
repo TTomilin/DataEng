@@ -12,11 +12,11 @@ import scala.Tuple2;
 import schema.CountryPair;
 import schema.DataEntry;
 import session.SessionWrapper;
-import statistics.mapper.CombinationGenerator;
+import statistics.mapper.combinations.CombinationGenerator;
 import statistics.mapper.CountryPairWrapper;
 import statistics.mapper.EnergyDataConverter;
-import statistics.mapper.FormulaSeparator;
-import statistics.mapper.StatisticComputer;
+import statistics.mapper.separation.FormulaSeparator;
+import statistics.mapper.computation.StatisticComputer;
 import statistics.reducer.FormulaComponentAggregator;
 import statistics.reducer.FormulaComponentSummator;
 

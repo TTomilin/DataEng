@@ -3,12 +3,12 @@ package statistics;
 import org.apache.spark.api.java.JavaRDD;
 
 import schema.DataEntry;
-import statistics.mapper.CombinationGenerator;
-import statistics.mapper.FormulaSeparator;
-import statistics.mapper.PearsonCombinationGenerator;
-import statistics.mapper.PearsonFormulaSeparator;
-import statistics.mapper.PearsonStatisticComputer;
-import statistics.mapper.StatisticComputer;
+import statistics.mapper.combinations.CombinationGenerator;
+import statistics.mapper.separation.FormulaSeparator;
+import statistics.mapper.combinations.PearsonCombinationGenerator;
+import statistics.mapper.separation.PearsonFormulaSeparator;
+import statistics.mapper.computation.PearsonStatisticComputer;
+import statistics.mapper.computation.StatisticComputer;
 
 public class PearsonCorrelationManager extends CorrelationManager {
 

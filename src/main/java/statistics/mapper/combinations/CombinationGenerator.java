@@ -1,4 +1,4 @@
-package statistics.mapper;
+package statistics.mapper.combinations;
 
 import java.sql.Timestamp;
 import java.util.Collection;

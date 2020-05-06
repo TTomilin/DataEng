@@ -2,6 +2,7 @@ package session;
 
 import javax.inject.Singleton;
 
+import org.apache.log4j.lf5.LogLevel;
 import org.apache.spark.SparkConf;
 import org.apache.spark.sql.SparkSession;
 
@@ -21,8 +22,8 @@ public class SessionWrapper {
 		return session;
 	}
 
-	public static void setLogLevel(String logLevel) {
-		getSession().sparkContext().setLogLevel(logLevel);
+	public static void setLogLevel(LogLevel logLevel) {
+		getSession().sparkContext().setLogLevel(logLevel.getLabel());
 	}
 
 	private static SparkConf getSparkConfig() {

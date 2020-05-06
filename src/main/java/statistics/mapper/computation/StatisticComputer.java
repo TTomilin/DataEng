@@ -1,4 +1,4 @@
-package statistics.mapper;
+package statistics.mapper.computation;
 
 import java.util.Map;
 
