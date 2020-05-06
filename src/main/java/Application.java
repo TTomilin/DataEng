@@ -7,6 +7,7 @@ import statistics.StatisticsManager;
 
 import static data.DataFile.SOLAR;
 import static data.DataFile.WIND;
+import static data.DataFile.WIND_100ROWS;
 import static data.DataFile.WIND_10ROWS_3COUNTRIES;
 
 public class Application {
@@ -16,8 +17,9 @@ public class Application {
 	public static void main(String[] args) {
 		setHadoopHome(args);
 		manager = new StatisticsManager();
-		manager.spearmanCorrelations(WIND_10ROWS_3COUNTRIES);
-//		pearsonCorrelation(WIND);
+		spearmanCorrelation(WIND);
+//		pearsonCorrelation(WIND_100ROWS);
+		pearsonCorrelation(WIND);
 //		pearsonCorrelation(SOLAR);
 	}
 
@@ -26,6 +28,10 @@ public class Application {
 		if (!Arrays.asList(args).isEmpty()) {
 			System.setProperty("hadoop.home.dir", args[0]);
 		}
+	}
+
+	private static void spearmanCorrelation(DataFile type) {
+		manager.spearmanCorrelations(type).forEach(Application::logCorrelation);
 	}
 
 	private static void pearsonCorrelation(DataFile type) {

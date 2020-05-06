@@ -24,6 +24,7 @@ import statistics.mapper.CountryPairWrapper;
 import statistics.mapper.NewCombinationGenerator;
 import statistics.mapper.PearsonFormulaSeparator;
 import statistics.mapper.PearsonStatisticComputer;
+import statistics.mapper.SpearmanSimpleFormulaComputer;
 import statistics.mapper.SpearmanSimpleFormulaSeparator;
 import statistics.reducer.FormulaComponentAggregator;
 import statistics.reducer.FormulaComponentSummator;
@@ -46,7 +47,7 @@ public class StatisticsManager implements IManager, Serializable {
 	}
 
 	public Collection<Tuple2<CountryPair, Double>> spearmanCorrelations(DataFile dataFile) {
-		getJavaRDDStream(dataFile)
+		return getJavaRDDStream(dataFile)
 				.flatMap(this::toEnergyValues)
 				.filter(this::valueProvided)
 				.sortBy(EnergyData::getValue, true, NUM_PARTITIONS)
@@ -57,8 +58,11 @@ public class StatisticsManager implements IManager, Serializable {
 				.flatMap(new NewCombinationGenerator())
 				.flatMapToPair(new SpearmanSimpleFormulaSeparator())
 				.reduceByKey(componentSummator)
+				.mapToPair(countryPairWrapper)
+				.reduceByKey(componentAggregator)
+				.mapValues(new SpearmanSimpleFormulaComputer())
+				.filter(this::applyThreshold)
 				.collect();
-		return null;
 	}
 
 	public Collection<Tuple2<CountryPair, Double>> pearsonCorrelations(DataFile dataFile) {
@@ -70,7 +74,7 @@ public class StatisticsManager implements IManager, Serializable {
 				.mapToPair(countryPairWrapper)
 				.reduceByKey(componentAggregator)
 				.mapValues(statisticComputer)
-				.filter(this::applyThreshold) // Temporarily removed to display all values
+				.filter(this::applyThreshold)
 				.collect();
 	}
 
