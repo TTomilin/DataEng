@@ -1,10 +1,11 @@
 package statistics.formula;
 
-public enum FormulaComponent {
+public enum FormulaComponentType {
 	COUNT,
 	FIRST_ELEMENT,
 	SECOND_ELEMENT,
 	FIRST_SQUARED,
 	SECOND_SQUARED,
-	PRODUCT
+	PRODUCT,
+	DIFF_SQUARED
 }

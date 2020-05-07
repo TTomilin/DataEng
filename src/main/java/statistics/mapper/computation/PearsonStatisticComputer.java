@@ -1,31 +1,29 @@
-package statistics.mapper;
+package statistics.mapper.computation;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Map;
 
-import org.apache.spark.api.java.function.Function;
+import statistics.formula.FormulaComponentType;
+import statistics.formula.FormulaComponentValue;
 
-import statistics.formula.FormulaComponent;
-import statistics.formula.FormulaValue;
-
-import static statistics.formula.FormulaComponent.COUNT;
-import static statistics.formula.FormulaComponent.FIRST_ELEMENT;
-import static statistics.formula.FormulaComponent.FIRST_SQUARED;
-import static statistics.formula.FormulaComponent.PRODUCT;
-import static statistics.formula.FormulaComponent.SECOND_ELEMENT;
-import static statistics.formula.FormulaComponent.SECOND_SQUARED;
+import static statistics.formula.FormulaComponentType.COUNT;
+import static statistics.formula.FormulaComponentType.FIRST_ELEMENT;
+import static statistics.formula.FormulaComponentType.FIRST_SQUARED;
+import static statistics.formula.FormulaComponentType.PRODUCT;
+import static statistics.formula.FormulaComponentType.SECOND_ELEMENT;
+import static statistics.formula.FormulaComponentType.SECOND_SQUARED;
 
 /**
  * Computes the correlation statistic given a map of respectively summed up formula components
- * Utilizes the pearson correlation formula
+ * Utilizes the Pearson correlation formula
  */
-public class PearsonStatisticComputer implements Function<Map<FormulaComponent, FormulaValue>, Double> {
+public class PearsonStatisticComputer extends StatisticComputer {
 
 	private final MathContext mathContext = MathContext.DECIMAL64;
 
 	@Override
-	public Double call(Map<FormulaComponent, FormulaValue> formulaComponents) {
+	public Double call(Map<FormulaComponentType, FormulaComponentValue> formulaComponents) {
 		BigDecimal count = new BigDecimal(formulaComponents.get(COUNT).getValue());
 		BigDecimal sumX = new BigDecimal(formulaComponents.get(FIRST_ELEMENT).getValue());
 		BigDecimal sumY = new BigDecimal(formulaComponents.get(SECOND_ELEMENT).getValue());

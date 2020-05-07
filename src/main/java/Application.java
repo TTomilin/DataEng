@@ -1,22 +1,32 @@
 import java.util.Arrays;
 
-import data.EnergyType;
+import static org.apache.log4j.lf5.LogLevel.WARN;
+
+import data.DataFile;
 import scala.Tuple2;
 import schema.CountryPair;
-import statistics.StatisticsManager;
+import session.SessionWrapper;
+import statistics.CorrelationType;
+import statistics.manager.PearsonCorrelationManager;
+import statistics.manager.SpearmanCorrelationManager;
 
-import static data.EnergyType.SOLAR;
-import static data.EnergyType.WIND;
+import static data.DataFile.SOLAR;
+import static data.DataFile.WIND;
+import static statistics.CorrelationType.PEARSON;
+import static statistics.CorrelationType.SPEARMAN;
 
 public class Application {
 
-	private static StatisticsManager manager;
+	private static PearsonCorrelationManager pearson = new PearsonCorrelationManager();
+	private static SpearmanCorrelationManager spearman = new SpearmanCorrelationManager();
 
 	public static void main(String[] args) {
 		setHadoopHome(args);
-		manager = new StatisticsManager();
+		SessionWrapper.setLogLevel(WARN);
 		pearsonCorrelation(WIND);
+		spearmanCorrelation(WIND);
 		pearsonCorrelation(SOLAR);
+		spearmanCorrelation(SOLAR);
 	}
 
 	private static void setHadoopHome(String[] args) {
@@ -26,8 +36,19 @@ public class Application {
 		}
 	}
 
-	private static void pearsonCorrelation(EnergyType type) {
-		manager.pearsonCorrelations(type).forEach(Application::logCorrelation);
+	private static void pearsonCorrelation(DataFile file) {
+		logCorrelationStart(PEARSON, file);
+		pearson.calculateCorrelations(file).forEach(Application::logCorrelation);
+	}
+
+	private static void spearmanCorrelation(DataFile file) {
+		logCorrelationStart(SPEARMAN, file);
+		spearman.calculateCorrelations(file).forEach(Application::logCorrelation);
+	}
+
+	private static void logCorrelationStart(CorrelationType type, DataFile file) {
+		System.out.println();
+		System.out.println(String.format("Calculating %s correlation of %s data", type, file));
 	}
 
 	private static void logCorrelation(Tuple2<CountryPair, Double> tuple) {
