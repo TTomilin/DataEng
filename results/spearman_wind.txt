@@ -1,0 +1,14 @@
+Hungary	Austria	0.8119
+Romania	Bulgaria	0.69169
+Spain	Portugal	0.67461
+Germany	Czechia	0.66521
+Lithuania	Latvia	0.66501
+Poland	Germany	0.6249
+Lithuania	Poland	0.60258
+Denmark	Germany	0.58678
+Poland	Czechia	0.58674
+Latvia	Estonia	0.56938
+"(SE,"	"DK),"	0.5614
+"(CZ,"	"AT),"	0.55213
+"(SE,"	"FI),"	0.51682
+"(SE,"	"EE),"	0.50811
