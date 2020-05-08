@@ -31,8 +31,8 @@ public abstract class CombinationGenerator implements FlatMapFunction<Tuple2<Tim
 	 */
 	@Override
 	public Iterator<DataEntryPair> call(Tuple2<Timestamp, Iterable<DataEntry>> tuple) {
-		Collection<DataEntry> objects = IterableUtils.toList(tuple._2());
-		return generateCombinations(objects).stream()
+		Collection<DataEntry> dataEntries = IterableUtils.toList(tuple._2());
+		return generateCombinations(dataEntries).stream()
 				.map(this::toValuePair)
 				.collect(Collectors.toList())
 				.iterator();

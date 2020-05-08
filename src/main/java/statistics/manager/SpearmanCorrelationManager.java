@@ -1,17 +1,15 @@
 package statistics.manager;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import org.apache.spark.api.java.JavaRDD;
 
-import scala.Tuple2;
 import schema.DataEntry;
+import statistics.mapper.SpearmanIncrementalRanker;
 import statistics.mapper.combinations.CombinationGenerator;
-import statistics.mapper.separation.FormulaSeparator;
 import statistics.mapper.combinations.SpearmanCombinationGenerator;
-import statistics.mapper.separation.SpearmanFormulaSeparator;
 import statistics.mapper.computation.SpearmanStatisticComputer;
 import statistics.mapper.computation.StatisticComputer;
+import statistics.mapper.separation.FormulaSeparator;
+import statistics.mapper.separation.SpearmanFormulaSeparator;
 
 public class SpearmanCorrelationManager extends CorrelationManager {
 
@@ -21,14 +19,14 @@ public class SpearmanCorrelationManager extends CorrelationManager {
 	private CombinationGenerator generator = new SpearmanCombinationGenerator();
 	private FormulaSeparator separator = new SpearmanFormulaSeparator();
 	private StatisticComputer computer = new SpearmanStatisticComputer();
+	private SpearmanIncrementalRanker ranker = new SpearmanIncrementalRanker();
 
 	@Override
 	protected JavaRDD<DataEntry> applyRanking(JavaRDD<DataEntry> javaRDD) {
 		return javaRDD
 				.sortBy(DataEntry::getValue, Boolean.TRUE, NUM_PARTITIONS)
 				.groupBy(DataEntry::getCountry)
-				.map(this::rank)
-				.flatMap(data -> data._2().iterator());
+				.flatMap(ranker);
 	}
 
 	@Override
@@ -44,11 +42,5 @@ public class SpearmanCorrelationManager extends CorrelationManager {
 	@Override
 	protected StatisticComputer getStatisticComputer() {
 		return computer;
-	}
-
-	public Tuple2<String, Iterable<DataEntry>> rank(Tuple2<String, Iterable<DataEntry>> tuples) {
-		AtomicInteger count = new AtomicInteger();
-		tuples._2().forEach(data -> data.setRank(count.incrementAndGet()));
-		return tuples;
 	}
 }
