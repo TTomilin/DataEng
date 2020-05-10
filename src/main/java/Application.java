@@ -7,8 +7,6 @@ import scala.Tuple2;
 import schema.CountryPair;
 import session.SessionWrapper;
 import statistics.CorrelationType;
-import statistics.manager.PearsonCorrelationManager;
-import statistics.manager.SpearmanCorrelationManager;
 
 import static data.DataFile.SOLAR;
 import static data.DataFile.WIND;
@@ -17,16 +15,13 @@ import static statistics.CorrelationType.SPEARMAN;
 
 public class Application {
 
-	private static PearsonCorrelationManager pearson = new PearsonCorrelationManager();
-	private static SpearmanCorrelationManager spearman = new SpearmanCorrelationManager();
-
 	public static void main(String[] args) {
 		setHadoopHome(args);
 		SessionWrapper.setLogLevel(WARN);
-		pearsonCorrelation(WIND);
-		spearmanCorrelation(WIND);
-		pearsonCorrelation(SOLAR);
-		spearmanCorrelation(SOLAR);
+		correlation(PEARSON, WIND);
+		correlation(SPEARMAN, WIND);
+		correlation(PEARSON, SOLAR);
+		correlation(SPEARMAN, SOLAR);
 	}
 
 	private static void setHadoopHome(String[] args) {
@@ -36,14 +31,9 @@ public class Application {
 		}
 	}
 
-	private static void pearsonCorrelation(DataFile file) {
-		logCorrelationStart(PEARSON, file);
-		pearson.calculateCorrelations(file).forEach(Application::logCorrelation);
-	}
-
-	private static void spearmanCorrelation(DataFile file) {
-		logCorrelationStart(SPEARMAN, file);
-		spearman.calculateCorrelations(file).forEach(Application::logCorrelation);
+	private static void correlation(CorrelationType type, DataFile file) {
+		logCorrelationStart(type, file);
+		type.getManager().calculateCorrelations(file).forEach(Application::logCorrelation);
 	}
 
 	private static void logCorrelationStart(CorrelationType type, DataFile file) {
