@@ -1,5 +1,13 @@
 # Q4 Data Engineering 
 
+## Instructions for running
+
+1. Import the pom.xml as a Maven project in the IDE
+2. Install Java SE Development Kit 11 and set it as the project SDK for compilation and JVM for execution
+3. Install Maven for dependency management and have proper (default) local configuration in usr/m2/settings.xml
+4. Enable "Annotation Processing" for the Lombok library under Project Settings -> Build -> Compiler 
+(the program will execute without it, but give errors at compile time)
+
 ## Milestone 1 — choosing and preparing your data, introductory analysis
 
 For the first milestone, you are asked to:
