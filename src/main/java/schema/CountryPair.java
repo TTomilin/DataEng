@@ -8,6 +8,7 @@ import scala.Serializable;
 
 @Getter
 @AllArgsConstructor
+@Deprecated
 public class CountryPair implements Serializable, Comparator<CountryPair> {
 
 	private final String firstCountry;

@@ -9,14 +9,14 @@ import org.apache.spark.sql.Row;
 import data.DataFile;
 import scala.Serializable;
 import scala.Tuple2;
-import schema.CountryPair;
 import schema.DataEntry;
+import schema.MultiCountryPair;
 import session.SessionWrapper;
-import statistics.mapper.combinations.CombinationGenerator;
 import statistics.mapper.CountryPairWrapper;
 import statistics.mapper.EnergyDataConverter;
-import statistics.mapper.separation.FormulaSeparator;
+import statistics.mapper.combinations.CombinationGenerator;
 import statistics.mapper.computation.StatisticComputer;
+import statistics.mapper.separation.FormulaSeparator;
 import statistics.reducer.FormulaComponentAggregator;
 import statistics.reducer.FormulaComponentSummator;
 
@@ -30,7 +30,7 @@ public abstract class CorrelationManager implements ICorrelationManager, Seriali
 	private EnergyDataConverter converter = new EnergyDataConverter();
 
 	@Override
-	public Collection<Tuple2<CountryPair, Double>> calculateCorrelations(DataFile dataFile) {
+	public Collection<Tuple2<MultiCountryPair, Double>> calculateCorrelations(DataFile dataFile) {
 		JavaRDD<DataEntry> javaRDD = getDataEntryJavaRDD(dataFile);
 		return applyRanking(javaRDD)
 				.groupBy(DataEntry::getTimestamp)
@@ -49,7 +49,7 @@ public abstract class CorrelationManager implements ICorrelationManager, Seriali
 	protected abstract FormulaSeparator getFormulaSeparator();
 	protected abstract StatisticComputer getStatisticComputer();
 
-	protected boolean valueProvided(DataEntry data) {
+	private boolean valueProvided(DataEntry data) {
 		return data.getValue() != 0;
 	}
 
@@ -65,7 +65,7 @@ public abstract class CorrelationManager implements ICorrelationManager, Seriali
 				.filter(this::valueProvided);
 	}
 
-	private boolean applyThreshold(Tuple2<CountryPair, Double> tuple) {
+	private boolean applyThreshold(Tuple2<MultiCountryPair, Double> tuple) {
 		return tuple._2() >= THRESHOLD;
 	}
 }

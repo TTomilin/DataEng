@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import scala.Serializable;
-import schema.CountryPair;
+import schema.MultiCountryPair;
 
 @Getter
 @ToString
@@ -13,6 +13,6 @@ import schema.CountryPair;
 @AllArgsConstructor
 public class FormulaComponentKey implements Serializable {
 
-	private final CountryPair countryPair;
+	private final MultiCountryPair countryPair;
 	private final FormulaComponentType component;
 }
