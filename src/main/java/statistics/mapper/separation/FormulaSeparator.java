@@ -6,8 +6,8 @@ import java.util.Iterator;
 import org.apache.spark.api.java.function.PairFlatMapFunction;
 
 import scala.Tuple2;
-import schema.DataEntryPair;
 import schema.CorrelationMeasurePair;
+import schema.DataEntryPair;
 import statistics.formula.FormulaComponentKey;
 import statistics.formula.FormulaComponentType;
 import statistics.formula.FormulaComponentValue;
@@ -52,7 +52,7 @@ public abstract class FormulaSeparator implements PairFlatMapFunction<DataEntryP
 	protected Tuple2<FormulaComponentKey, FormulaComponentValue> createTuple(DataEntryPair pair, Tuple2<FormulaComponentType, Double> componentTuple) {
 		FormulaComponentType component = componentTuple._1();
 		FormulaComponentKey key = new FormulaComponentKey(pair.getCountryPair(), component);
-		FormulaComponentValue formulaComponentValue = new FormulaComponentValue(pair.getTimestamp(), pair.getCountryPair(), component, componentTuple._2());
+		FormulaComponentValue formulaComponentValue = new FormulaComponentValue(pair.getCountryPair(), component, componentTuple._2());
 		return new Tuple2<>(key, formulaComponentValue);
 	}
 }

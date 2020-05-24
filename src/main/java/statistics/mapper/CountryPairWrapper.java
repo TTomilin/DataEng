@@ -6,16 +6,16 @@ import java.util.Map;
 import org.apache.spark.api.java.function.PairFunction;
 
 import scala.Tuple2;
-import schema.CountryPair;
-import statistics.formula.FormulaComponentType;
+import schema.MultiCountryPair;
 import statistics.formula.FormulaComponentKey;
+import statistics.formula.FormulaComponentType;
 import statistics.formula.FormulaComponentValue;
 
 /**
  * In order to calculate the statistic, the formula components
  * need to be grouped together for each country pair beforehand.
  */
-public class CountryPairWrapper implements PairFunction<Tuple2<FormulaComponentKey, FormulaComponentValue>, CountryPair, Map<FormulaComponentType, FormulaComponentValue>> {
+public class CountryPairWrapper implements PairFunction<Tuple2<FormulaComponentKey, FormulaComponentValue>, MultiCountryPair, Map<FormulaComponentType, FormulaComponentValue>> {
 
 	/**
 	 * Remaps the tuples by the country pair key for further aggregation
@@ -24,7 +24,7 @@ public class CountryPairWrapper implements PairFunction<Tuple2<FormulaComponentK
 	 * a single element map containing the formula value by the component
 	 */
 	@Override
-	public Tuple2<CountryPair, Map<FormulaComponentType, FormulaComponentValue>> call(Tuple2<FormulaComponentKey, FormulaComponentValue> tuple) {
+	public Tuple2<MultiCountryPair, Map<FormulaComponentType, FormulaComponentValue>> call(Tuple2<FormulaComponentKey, FormulaComponentValue> tuple) {
 		Map<FormulaComponentType, FormulaComponentValue> map = new HashMap<>();
 		map.put(tuple._1().getComponent(), tuple._2());
 		return new Tuple2<>(tuple._1().getCountryPair(), map);
