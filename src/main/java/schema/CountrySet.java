@@ -1,20 +1,19 @@
 package schema;
 
+import java.util.Collection;
 import java.util.HashSet;
 
-import lombok.ToString;
 import scala.Serializable;
 
-@ToString
-public class CountrySet extends HashSet<String> implements Serializable {
+public class CountrySet extends HashSet<String> implements CountryCollection, Serializable {
 
 	@Override
-	public boolean equals(Object o) {
-		return super.equals(o);
+	public Collection<String> getCountries() {
+		return this;
 	}
 
 	@Override
-	public int hashCode() {
-		return super.hashCode();
+	public String toString() {
+		return "[" + String.join(", ", this) + "]";
 	}
 }

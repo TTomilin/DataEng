@@ -8,17 +8,16 @@ import java.util.stream.Collectors;
 
 import static org.apache.commons.collections4.CollectionUtils.isEqualCollection;
 
-import org.apache.commons.collections4.CollectionUtils;
-
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-//@ToString
-//@EqualsAndHashCode
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class DataEntrySet extends HashSet<DataEntry> {
+
+	private Integer[] marginalOccurrences;
 
 	@Override
 	public boolean equals(Object object) {
@@ -28,12 +27,7 @@ public class DataEntrySet extends HashSet<DataEntry> {
 			return false;
 		}
 		DataEntrySet other = (DataEntrySet) object;
-//		boolean equal = getCountries().containsAll(other.getCountries()) && getValues().containsAll(other.getValues());
-		boolean equal = isEqualCollection(getCountries(), other.getCountries()) && isEqualCollection(getValues(), other.getValues());
-//		if (equal) {
-//			System.out.println(this + " and " + other + " are equal: " + equal);
-//		}
-		return equal;
+		return isEqualCollection(getCountries(), other.getCountries()) && isEqualCollection(getValues(), other.getValues());
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import org.apache.spark.api.java.function.Function2;
 
 import data.DataFile;
 import scala.Tuple2;
+import schema.CountryCollection;
 import schema.DataEntry;
 import schema.MultiCountryPair;
 import statistics.mapper.TotalCountryPairWrapper;
@@ -49,9 +50,9 @@ public class TotalCorrelationManager extends CorrelationManager {
 	}
 
 	@Override
-	public Collection<Tuple2<MultiCountryPair, Double>> calculateCorrelations(DataFile dataFile) {
+	public Collection<Tuple2<CountryCollection, Double>> calculateCorrelations(DataFile dataFile) {
 		JavaRDD<DataEntry> javaRDD = getDataEntryJavaRDD(dataFile);
-		applyRanking(javaRDD)
+		return applyRanking(javaRDD)
 				.groupBy(DataEntry::getTimestamp)
 				.flatMap(generator)
 				.mapToPair(separator)
@@ -61,6 +62,5 @@ public class TotalCorrelationManager extends CorrelationManager {
 				.mapValues(computer)
 //				.filter(this::applyThreshold)
 				.collect();
-		return null;
 	}
 }

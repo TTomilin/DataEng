@@ -9,8 +9,8 @@ import org.apache.spark.sql.Row;
 import data.DataFile;
 import scala.Serializable;
 import scala.Tuple2;
+import schema.CountryCollection;
 import schema.DataEntry;
-import schema.MultiCountryPair;
 import session.SessionWrapper;
 import statistics.mapper.CountryPairWrapper;
 import statistics.mapper.EnergyDataConverter;
@@ -30,7 +30,7 @@ public abstract class CorrelationManager implements ICorrelationManager, Seriali
 	protected EnergyDataConverter converter = new EnergyDataConverter();
 
 	@Override
-	public Collection<Tuple2<MultiCountryPair, Double>> calculateCorrelations(DataFile dataFile) {
+	public Collection<Tuple2<CountryCollection, Double>> calculateCorrelations(DataFile dataFile) {
 		JavaRDD<DataEntry> javaRDD = getDataEntryJavaRDD(dataFile);
 		return applyRanking(javaRDD)
 				.groupBy(DataEntry::getTimestamp)
@@ -65,7 +65,7 @@ public abstract class CorrelationManager implements ICorrelationManager, Seriali
 				.filter(this::valueProvided);
 	}
 
-	protected boolean applyThreshold(Tuple2<MultiCountryPair, Double> tuple) {
+	protected boolean applyThreshold(Tuple2<CountryCollection, Double> tuple) {
 		return tuple._2() >= THRESHOLD;
 	}
 }

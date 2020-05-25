@@ -11,10 +11,15 @@ import scala.Serializable;
 
 @Getter
 @AllArgsConstructor
-public class MultiCountryPair implements Serializable {
+public class MultiCountryPair implements CountryCollection, Serializable {
 
 	Collection<String> firstCollection;
 	Collection<String> secondCollection;
+
+	@Override
+	public Collection<String> getCountries() {
+		return CollectionUtils.union(firstCollection, secondCollection);
+	}
 
 	@Override
 	public String toString() {
