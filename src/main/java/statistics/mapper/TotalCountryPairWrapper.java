@@ -15,7 +15,7 @@ public class TotalCountryPairWrapper implements PairFunction<Tuple2<DataEntrySet
 	public Tuple2<Collection<String>, Map<Collection<Integer>, Integer>> call(Tuple2<DataEntrySet, Integer> tuple) {
 		Map<Collection<Integer>, Integer> counts = new HashMap<>();
 		DataEntrySet entries = tuple._1();
-		counts.put(entries.getValues(), 1);
+		counts.put(entries.getValues(), tuple._2());
 		return new Tuple2<>(entries.getCountries(), counts);
 	}
 }

@@ -12,6 +12,7 @@ public enum DataFile {
 	WIND_10ROWS_3COUNTRIES		("wind_10rows_3countries"),
 	WIND_10ROWS_4COUNTRIES		("wind_10rows_4countries"),
 	WIND_10ROWS_7COUNTRIES		("wind_10rows_7countries"),
+	WIND_10ROWS_3COUNTRIES_DISC	("wind_10rows_3countries_disc"),
 	WIND_10ROWS_6COUNTRIES_DISC	("wind_10rows_6countries_disc");
 
 	private final String fileName;

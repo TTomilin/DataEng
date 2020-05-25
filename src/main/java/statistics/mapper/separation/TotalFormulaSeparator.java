@@ -18,6 +18,7 @@ public class TotalFormulaSeparator implements PairFunction<DataEntrySet, DataEnt
 //		DataEntryCollection occurrence = new DataEntryCollection(countries, 1);
 //		Map<Collection<DataEntry>, Integer> occurrences = new HashMap<>();
 //		occurrences.put(dataEntries, 1);
+		System.out.println("Entries " + entries);
 		return new Tuple2<>(entries, 1);
 	}
 }

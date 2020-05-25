@@ -9,6 +9,7 @@ public class BinAggregator implements Function2<Map<Collection<Integer>, Integer
 
 	@Override
 	public Map<Collection<Integer>, Integer> call(Map<Collection<Integer>, Integer> firstMap, Map<Collection<Integer>, Integer> secondMap) {
+		System.out.println("Aggregating " + firstMap.keySet() + " with " + secondMap.keySet());
 		firstMap.putAll(secondMap);
 		return firstMap;
 	}

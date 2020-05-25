@@ -26,6 +26,7 @@ public class DataEntryCollection implements Serializable {
 			return false;
 		}
 		DataEntryCollection other = (DataEntryCollection) object;
+//		boolean equal = countries.containsAll(other.getCountries()) && values.containsAll(other.getValues());
 		boolean equal = CollectionUtils.isEqualCollection(countries, other.getCountries()) && CollectionUtils.isEqualCollection(values, other.getValues());
 		if (equal) {
 			System.out.println(this + " and " + other + " are equal: " + equal);

@@ -23,6 +23,6 @@ public class TotalStatisticComputer implements Function<Map<Collection<Integer>,
 	}
 
 	private void log(Collection<Integer> key, Integer value) {
-		System.out.println("KEY: " + key + ", VALUE: " + value);
+		System.out.println("Values: " + key + ", Count: " + value);
 	}
 }
