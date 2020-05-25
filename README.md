@@ -37,7 +37,7 @@ the correlation measure is commutative, your code should avoid redundant
 computations, i.e., double comparisons.
 4. Make sure that your Spark code scales out and avoids bottlenecks.
 
-## Milestone 2
+## Milestone 2 - multiple correlations
 For the second milestone, you are asked to find high multiple correlations of size p , i.e.,
 correlations between at least p ≥ 3 vectors, that are over a threshold τ . You are free to choose
 the value of p , or set it as an input parameter of your code. As correlation measures, you should
