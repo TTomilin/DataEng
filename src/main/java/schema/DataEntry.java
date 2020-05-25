@@ -2,6 +2,7 @@ package schema;
 
 import java.sql.Timestamp;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -11,11 +12,20 @@ import scala.Serializable;
 
 @Getter
 @ToString
+@EqualsAndHashCode
 @RequiredArgsConstructor
 public class DataEntry implements Serializable {
 
-	@NonNull private final Timestamp timestamp;
-	@NonNull private final String country;
+	@NonNull
+	private final Timestamp timestamp;
+
+	@NonNull
+	@EqualsAndHashCode.Include
+	private final String country;
+
+	@EqualsAndHashCode.Include
 	private final double value;
-	@Setter private int rank;
+
+	@Setter
+	private int rank;
 }

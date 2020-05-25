@@ -22,12 +22,12 @@ import statistics.reducer.FormulaComponentSummator;
 
 public abstract class CorrelationManager implements ICorrelationManager, Serializable {
 
-	private static final double THRESHOLD = 0.5;
-	private static final String PATH_TEMPLATE = "src/main/resources/energy-data/%s.csv";
-	private FormulaComponentSummator componentSummator = new FormulaComponentSummator();
-	private CountryPairWrapper countryPairWrapper = new CountryPairWrapper();
-	private FormulaComponentAggregator componentAggregator = new FormulaComponentAggregator();
-	private EnergyDataConverter converter = new EnergyDataConverter();
+	protected static final double THRESHOLD = 0.5;
+	protected static final String PATH_TEMPLATE = "src/main/resources/energy-data/%s.csv";
+	protected FormulaComponentSummator componentSummator = new FormulaComponentSummator();
+	protected CountryPairWrapper countryPairWrapper = new CountryPairWrapper();
+	protected FormulaComponentAggregator componentAggregator = new FormulaComponentAggregator();
+	protected EnergyDataConverter converter = new EnergyDataConverter();
 
 	@Override
 	public Collection<Tuple2<MultiCountryPair, Double>> calculateCorrelations(DataFile dataFile) {
@@ -49,11 +49,11 @@ public abstract class CorrelationManager implements ICorrelationManager, Seriali
 	protected abstract FormulaSeparator getFormulaSeparator();
 	protected abstract StatisticComputer getStatisticComputer();
 
-	private boolean valueProvided(DataEntry data) {
+	protected boolean valueProvided(DataEntry data) {
 		return data.getValue() != 0;
 	}
 
-	private JavaRDD<DataEntry> getDataEntryJavaRDD(DataFile dataFile) {
+	protected JavaRDD<DataEntry> getDataEntryJavaRDD(DataFile dataFile) {
 		return SessionWrapper.getSession().read()
 				.format("csv")
 				.option("header", "true")
@@ -65,7 +65,7 @@ public abstract class CorrelationManager implements ICorrelationManager, Seriali
 				.filter(this::valueProvided);
 	}
 
-	private boolean applyThreshold(Tuple2<MultiCountryPair, Double> tuple) {
+	protected boolean applyThreshold(Tuple2<MultiCountryPair, Double> tuple) {
 		return tuple._2() >= THRESHOLD;
 	}
 }
