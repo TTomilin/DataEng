@@ -30,7 +30,7 @@ public class TotalStatisticComputer implements Function<Map<DataEntrySet, Intege
 //		int[][] marginalProbs = new int[countMap.size()][BIN_SIZE];
 		Map<String, double[]> marginalProbabilities = new HashMap<>();
 
-		countMap.keySet().stream().flatMap(Set::stream).map(DataEntry::getCountry).forEach(country -> marginalProbabilities.put(country, emptyArray(BIN_SIZE)));
+		countMap.keySet().stream().flatMap(Set::stream).map(DataEntry::getCountry).forEach(country -> marginalProbabilities.put(country, new double[BIN_SIZE]));
 
 		Iterator<Entry<DataEntrySet, Integer>> iterator = countMap.entrySet().iterator();
 		while (iterator.hasNext()) {
@@ -79,7 +79,7 @@ public class TotalStatisticComputer implements Function<Map<DataEntrySet, Intege
 				double prob = marginalProbabilities.get(country)[value];
 				marginalProbabilityProduct *= prob;
 			}
-			double total = jointProbability * Math.log(jointProbability / marginalProbabilityProduct);
+			double total = jointProbability * Math.log10(jointProbability / marginalProbabilityProduct);
 			result += total;
 			System.out.println(String.format("Joint: %f, Marg: %f, Total: %f", jointProbability, marginalProbabilityProduct, total));
 		}
@@ -88,12 +88,6 @@ public class TotalStatisticComputer implements Function<Map<DataEntrySet, Intege
 
 	private double[] divide(String country, double[] occurrences) {
 		return Arrays.stream(occurrences).map(value -> value /= BIN_SIZE).toArray();
-	}
-
-	private double[] emptyArray(int size) {
-		double[] array = new double[size];
-		Arrays.fill(array, 0.0);
-		return array;
 	}
 
 	private int[] toOccurrences(List<Integer> values) {

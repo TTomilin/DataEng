@@ -13,6 +13,7 @@ import statistics.CorrelationType;
 import statistics.manager.CorrelationManager;
 
 import static data.DataFile.WIND_100ROWS;
+import static data.DataFile.WIND_100ROWS_6COUNTRIES_DISC;
 import static data.DataFile.WIND_10ROWS_3COUNTRIES_DISC;
 import static data.DataFile.WIND_10ROWS_6COUNTRIES_DISC;
 import static data.DataFile.WIND_10ROWS_7COUNTRIES;
@@ -38,7 +39,7 @@ public class Application {
 //		correlation(PEARSON_MULTI, WIND_10ROWS_6COUNTRIES_DISC, AVG);
 //		correlation(PEARSON_MULTI, WIND_100ROWS, AVG);
 
-		correlation(TOTAL, WIND_10ROWS_6COUNTRIES_DISC);
+		correlation(TOTAL, WIND_100ROWS_6COUNTRIES_DISC);
 	}
 
 	private static void setHadoopHome(String[] args) {
