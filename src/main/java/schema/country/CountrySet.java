@@ -1,4 +1,4 @@
-package schema;
+package schema.country;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -14,6 +14,6 @@ public class CountrySet extends HashSet<String> implements CountryCollection, Se
 
 	@Override
 	public String toString() {
-		return "[" + String.join(", ", this) + "]";
+		return "Countries [" + String.join(", ", this) + "]";
 	}
 }

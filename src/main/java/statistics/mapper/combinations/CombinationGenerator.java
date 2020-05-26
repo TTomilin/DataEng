@@ -15,17 +15,18 @@ import org.paukov.combinatorics.ICombinatoricsVector;
 
 import scala.Tuple2;
 import schema.CorrelationMeasurePair;
-import schema.DataEntry;
-import schema.DataEntryPair;
-import schema.MultiCountryPair;
+import schema.entry.DataEntry;
+import schema.entry.DataEntryCollection;
+import schema.entry.DataEntryPair;
+import schema.country.MultiCountryPair;
 
 /**
  * Maps the given input Row into a collection of combinations of every country pair
  */
-public abstract class CombinationGenerator implements FlatMapFunction<Tuple2<Timestamp, Iterable<DataEntry>>, DataEntryPair> {
+public abstract class CombinationGenerator implements FlatMapFunction<Tuple2<Timestamp, Iterable<DataEntry>>, DataEntryCollection> {
 
 	@Override
-	public Iterator<DataEntryPair> call(Tuple2<Timestamp, Iterable<DataEntry>> tuple) {
+	public Iterator<DataEntryCollection> call(Tuple2<Timestamp, Iterable<DataEntry>> tuple) {
 		Collection<DataEntry> dataEntries = IterableUtils.toList(tuple._2());
 		return generateCombinations(dataEntries).stream()
 				.map(this::toDataEntryPairs)
@@ -63,7 +64,7 @@ public abstract class CombinationGenerator implements FlatMapFunction<Tuple2<Tim
 	 * @param vector
 	 * @return
 	 */
-	protected Collection<DataEntryPair> toDataEntryPairs(ICombinatoricsVector<DataEntry> vector) {
+	protected Collection<DataEntryCollection> toDataEntryPairs(ICombinatoricsVector<DataEntry> vector) {
 		DataEntry firstEntry = vector.getValue(0);
 		DataEntry secondEntry = vector.getValue(1);
 		MultiCountryPair multiCountryPair = new MultiCountryPair(Set.of(firstEntry.getCountry()), Set.of(secondEntry.getCountry()));

@@ -5,18 +5,15 @@ import org.apache.log4j.lf5.LogLevel;
 
 import data.DataFile;
 import scala.Tuple2;
-import schema.CountryCollection;
-import schema.MultiCountryPair;
+import schema.country.CountryCollection;
 import session.SessionWrapper;
 import statistics.Aggregator;
 import statistics.CorrelationType;
 import statistics.manager.CorrelationManager;
 
+import static data.DataFile.SOLAR_DISCRETIZED;
 import static data.DataFile.WIND_100ROWS;
-import static data.DataFile.WIND_100ROWS_6COUNTRIES_DISC;
-import static data.DataFile.WIND_10ROWS_3COUNTRIES_DISC;
-import static data.DataFile.WIND_10ROWS_6COUNTRIES_DISC;
-import static data.DataFile.WIND_10ROWS_7COUNTRIES;
+import static data.DataFile.WIND_DISCRETIZED;
 import static statistics.Aggregator.AVG;
 import static statistics.CorrelationType.PEARSON_MULTI;
 import static statistics.CorrelationType.TOTAL;
@@ -36,10 +33,10 @@ public class Application {
 //		correlation(SPEARMAN, SOLAR);
 
 		// Milestone 2
-//		correlation(PEARSON_MULTI, WIND_10ROWS_6COUNTRIES_DISC, AVG);
-//		correlation(PEARSON_MULTI, WIND_100ROWS, AVG);
+		correlation(PEARSON_MULTI, WIND_100ROWS, AVG);
 
-		correlation(TOTAL, WIND_100ROWS_6COUNTRIES_DISC);
+		correlation(TOTAL, WIND_DISCRETIZED);
+		correlation(TOTAL, SOLAR_DISCRETIZED);
 	}
 
 	private static void setHadoopHome(String[] args) {
@@ -63,7 +60,7 @@ public class Application {
 
 	private static void logCorrelationStart(CorrelationType type, DataFile file) {
 		System.out.println();
-		System.out.println(String.format("Calculating %s correlation of %s data", type, file));
+		System.out.println(String.format("Calculating %s correlation of data from %s", type, file));
 	}
 
 	private static void logCorrelation(Tuple2<CountryCollection, Double> tuple) {

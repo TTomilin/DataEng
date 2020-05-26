@@ -2,7 +2,7 @@ package statistics.manager;
 
 import org.apache.spark.api.java.JavaRDD;
 
-import schema.DataEntry;
+import schema.entry.DataEntry;
 import statistics.mapper.SpearmanIncrementalRanker;
 import statistics.mapper.combinations.CombinationGenerator;
 import statistics.mapper.combinations.SpearmanCombinationGenerator;
@@ -13,7 +13,6 @@ import statistics.mapper.separation.SpearmanFormulaSeparator;
 
 public class SpearmanCorrelationManager extends CorrelationManager {
 
-	// TODO Determine the best number of partitions
 	private static final int NUM_PARTITIONS = 10;
 
 	private CombinationGenerator generator = new SpearmanCombinationGenerator();

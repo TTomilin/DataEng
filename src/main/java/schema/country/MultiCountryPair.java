@@ -1,4 +1,4 @@
-package schema;
+package schema.country;
 
 import java.util.Arrays;
 import java.util.Collection;

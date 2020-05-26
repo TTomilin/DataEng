@@ -2,7 +2,7 @@ package statistics.manager;
 
 import org.apache.spark.api.java.JavaRDD;
 
-import schema.DataEntry;
+import schema.entry.DataEntry;
 import statistics.mapper.combinations.CombinationGenerator;
 import statistics.mapper.separation.FormulaSeparator;
 import statistics.mapper.combinations.PearsonCombinationGenerator;
@@ -18,7 +18,6 @@ public class PearsonCorrelationManager extends CorrelationManager {
 
 	@Override
 	protected JavaRDD<DataEntry> applyRanking(JavaRDD<DataEntry> rdd) {
-		// Not needed
 		return rdd;
 	}
 

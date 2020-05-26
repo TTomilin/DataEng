@@ -1,6 +1,6 @@
 package statistics.mapper.combinations;
 
-import schema.DataEntry;
+import schema.entry.DataEntry;
 
 public class PearsonCombinationGenerator extends CombinationGenerator {
 

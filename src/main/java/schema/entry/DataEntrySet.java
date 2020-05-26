@@ -1,23 +1,34 @@
-package schema;
+package schema.entry;
 
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.apache.commons.collections4.CollectionUtils.isEqualCollection;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DataEntrySet extends HashSet<DataEntry> {
+public class DataEntrySet extends HashSet<DataEntry> implements DataEntryCollection {
 
-	private Integer[] marginalOccurrences;
+	private Integer count;
+
+	@Override
+	public Collection<String> getCountries() {
+		return stream().map(DataEntry::getCountry).collect(Collectors.toSet());
+	}
+
+	@Override
+	public Collection<Double> getValues() {
+		return stream().map(DataEntry::getValue).collect(Collectors.toList());
+	}
 
 	@Override
 	public boolean equals(Object object) {
@@ -39,13 +50,5 @@ public class DataEntrySet extends HashSet<DataEntry> {
 	public int hashCode() {
 		return stream().map(DataEntry::getCountry).mapToInt(Objects::hashCode).sum() +
 				stream().map(DataEntry::getValue).mapToInt(Objects::hashCode).sum();
-	}
-
-	public Set<String> getCountries() {
-		return stream().map(DataEntry::getCountry).collect(Collectors.toSet());
-	}
-
-	public List<Integer> getValues() {
-		return stream().map(DataEntry::getValue).map(Double::intValue).collect(Collectors.toList());
 	}
 }

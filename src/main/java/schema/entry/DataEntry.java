@@ -1,4 +1,4 @@
-package schema;
+package schema.entry;
 
 import java.sql.Timestamp;
 

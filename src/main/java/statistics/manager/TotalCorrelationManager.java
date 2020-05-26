@@ -1,33 +1,26 @@
 package statistics.manager;
 
-import java.util.Collection;
-import java.util.Map;
-
+import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.function.Function;
-import org.apache.spark.api.java.function.Function2;
 
-import data.DataFile;
-import scala.Tuple2;
-import schema.CountryCollection;
-import schema.DataEntry;
-import schema.MultiCountryPair;
-import statistics.mapper.TotalCountryPairWrapper;
+import schema.country.CountryCollection;
+import schema.entry.DataEntry;
+import schema.entry.DataEntryCollection;
 import statistics.mapper.combinations.CombinationGenerator;
 import statistics.mapper.combinations.TotalCombinationGenerator;
 import statistics.mapper.computation.StatisticComputer;
-import statistics.mapper.computation.TotalStatisticComputer;
+import statistics.mapper.computation.TotalCorrelationComputer;
 import statistics.mapper.separation.FormulaSeparator;
-import statistics.mapper.separation.TotalFormulaSeparator;
-import statistics.reducer.BinAggregator;
+import statistics.mapper.wrapper.CountWrapper;
+import statistics.mapper.wrapper.CountrySetWrapper;
 
 public class TotalCorrelationManager extends CorrelationManager {
 
 	private static final Integer COMBINATION_LENGTH = 3;
 
-	private TotalCombinationGenerator generator = new TotalCombinationGenerator(COMBINATION_LENGTH);
-	private TotalFormulaSeparator separator = new TotalFormulaSeparator();
-	private TotalStatisticComputer computer = new TotalStatisticComputer();
+	private CombinationGenerator generator = new TotalCombinationGenerator(COMBINATION_LENGTH);
+	private CountWrapper countWrapper = new CountWrapper();
+	private TotalCorrelationComputer computer = new TotalCorrelationComputer();
 
 	@Override
 	protected JavaRDD<DataEntry> applyRanking(JavaRDD<DataEntry> javaRDD) {
@@ -36,7 +29,7 @@ public class TotalCorrelationManager extends CorrelationManager {
 
 	@Override
 	protected CombinationGenerator getCombinationGenerator() {
-		return null;
+		return generator;
 	}
 
 	@Override
@@ -50,17 +43,12 @@ public class TotalCorrelationManager extends CorrelationManager {
 	}
 
 	@Override
-	public Collection<Tuple2<CountryCollection, Double>> calculateCorrelations(DataFile dataFile) {
-		JavaRDD<DataEntry> javaRDD = getDataEntryJavaRDD(dataFile);
-		return applyRanking(javaRDD)
-				.groupBy(DataEntry::getTimestamp)
-				.flatMap(generator)
-				.mapToPair(separator)
-				.reduceByKey((v1, v2) -> v1 + v2)
-				.mapToPair(new TotalCountryPairWrapper())
-				.reduceByKey(new BinAggregator())
-				.mapValues(computer)
-//				.filter(this::applyThreshold)
-				.collect();
+	protected JavaPairRDD<CountryCollection, Double> getStatistics(JavaRDD<DataEntryCollection> combinationsJavaRDD) {
+		return combinationsJavaRDD
+				.mapToPair(countWrapper)
+				.reduceByKey((firstCount, secondCount) -> firstCount + secondCount)
+				.mapToPair(new CountrySetWrapper())
+				.groupByKey()
+				.mapValues(computer);
 	}
 }

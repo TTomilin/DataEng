@@ -1,4 +1,4 @@
-package statistics.mapper;
+package statistics.mapper.wrapper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.spark.api.java.function.PairFunction;
 
 import scala.Tuple2;
-import schema.CountryCollection;
+import schema.country.CountryCollection;
 import statistics.formula.FormulaComponentKey;
 import statistics.formula.FormulaComponentType;
 import statistics.formula.FormulaComponentValue;

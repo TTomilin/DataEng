@@ -11,9 +11,10 @@ import org.paukov.combinatorics.util.ComplexCombinationGenerator;
 
 import lombok.RequiredArgsConstructor;
 import schema.CorrelationMeasurePair;
-import schema.DataEntry;
-import schema.DataEntryPair;
-import schema.MultiCountryPair;
+import schema.entry.DataEntry;
+import schema.entry.DataEntryCollection;
+import schema.entry.DataEntryPair;
+import schema.country.MultiCountryPair;
 import statistics.Aggregator;
 
 @RequiredArgsConstructor
@@ -42,7 +43,7 @@ public class PearsonMultiCombinationGenerator extends PearsonCombinationGenerato
 	 * @return
 	 */
 	@Override
-	protected Collection<DataEntryPair> toDataEntryPairs(ICombinatoricsVector<DataEntry> dataEntryVector) {
+	protected Collection<DataEntryCollection> toDataEntryPairs(ICombinatoricsVector<DataEntry> dataEntryVector) {
 		Generator<ICombinatoricsVector<DataEntry>> generator = new ComplexCombinationGenerator<>(dataEntryVector, N_COMBINATIONS);
 		List<ICombinatoricsVector<ICombinatoricsVector<DataEntry>>> combinatoricsVectorsList = generator.generateAllObjects();
 		return combinatoricsVectorsList.stream().map(this::toDataEntryPair).collect(Collectors.toSet());
