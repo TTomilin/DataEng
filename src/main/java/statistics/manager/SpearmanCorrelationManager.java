@@ -15,10 +15,14 @@ public class SpearmanCorrelationManager extends CorrelationManager {
 
 	private static final int NUM_PARTITIONS = 10;
 
-	private CombinationGenerator generator = new SpearmanCombinationGenerator();
+	private CombinationGenerator generator = new SpearmanCombinationGenerator(combinationLength);
 	private FormulaSeparator separator = new SpearmanFormulaSeparator();
 	private StatisticComputer computer = new SpearmanStatisticComputer();
 	private SpearmanIncrementalRanker ranker = new SpearmanIncrementalRanker();
+
+	public SpearmanCorrelationManager() {
+		super(DEFAULT_COMBINATION_LENGTH);
+	}
 
 	@Override
 	protected JavaRDD<DataEntry> applyRanking(JavaRDD<DataEntry> javaRDD) {

@@ -1,5 +1,6 @@
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
 
 import org.apache.log4j.lf5.LogLevel;
 
@@ -10,30 +11,39 @@ import session.SessionWrapper;
 import statistics.Aggregator;
 import statistics.CorrelationType;
 import statistics.manager.CorrelationManager;
+import statistics.manager.PearsonCorrelationManager;
+import statistics.manager.PearsonMultiCorrelationManager;
+import statistics.manager.SpearmanCorrelationManager;
+import statistics.manager.TotalCorrelationManager;
 
 import static data.DataFile.SOLAR_DISCRETIZED;
 import static data.DataFile.WIND_100ROWS;
 import static data.DataFile.WIND_DISCRETIZED;
 import static statistics.Aggregator.AVG;
+import static statistics.CorrelationType.PEARSON;
 import static statistics.CorrelationType.PEARSON_MULTI;
+import static statistics.CorrelationType.SPEARMAN;
 import static statistics.CorrelationType.TOTAL;
 
 public class Application {
 
+	private static Map<CorrelationType, CorrelationManager> managers;
 	private static LogLevel logLevel = LogLevel.WARN;
+	private static final Integer P_VALUE = 5; // Define the p-value here
 
-	public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+	public static void main(String[] args) {
 		setHadoopHome(args);
 		SessionWrapper.setLogLevel(logLevel);
+		initializeManagers();
 
 		// Milestone 1
-//		correlation(PEARSON, WIND);
-//		correlation(SPEARMAN, WIND);
-//		correlation(PEARSON, SOLAR);
-//		correlation(SPEARMAN, SOLAR);
+		// correlation(PEARSON, WIND);
+		// correlation(SPEARMAN, WIND);
+		// correlation(PEARSON, SOLAR);
+		// correlation(SPEARMAN, SOLAR);
 
 		// Milestone 2
-		correlation(PEARSON_MULTI, WIND_100ROWS, AVG);
+		correlation(PEARSON_MULTI, WIND_100ROWS, Optional.of(AVG));
 
 		correlation(TOTAL, WIND_DISCRETIZED);
 		correlation(TOTAL, SOLAR_DISCRETIZED);
@@ -46,16 +56,24 @@ public class Application {
 		}
 	}
 
-	private static void correlation(CorrelationType type, DataFile file, Aggregator... aggregator) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-		logCorrelationStart(type, file);
-		CorrelationManager manager = aggregator.length > 0 ?
-				createManagerWithAggregator(type, aggregator[0]) :
-				type.getManager().getDeclaredConstructor().newInstance();
-		manager.calculateCorrelations(file).forEach(Application::logCorrelation);
+	private static void initializeManagers() {
+		managers = Map.of(
+				PEARSON, new PearsonCorrelationManager(),
+				SPEARMAN, new SpearmanCorrelationManager(),
+				PEARSON_MULTI, new PearsonMultiCorrelationManager(P_VALUE),
+				TOTAL, new TotalCorrelationManager(P_VALUE)
+		);
 	}
 
-	private static CorrelationManager createManagerWithAggregator(CorrelationType type, Aggregator aggregator) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-		return type.getManager().getDeclaredConstructor(Aggregator.class).newInstance(aggregator);
+	private static void correlation(CorrelationType type, DataFile file) {
+		correlation(type, file, Optional.empty());
+	}
+
+	private static void correlation(CorrelationType type, DataFile file, Optional<Aggregator> aggregator) {
+		logCorrelationStart(type, file);
+		CorrelationManager manager = managers.get(type);
+		aggregator.ifPresent(agg -> ((PearsonMultiCorrelationManager) manager).updateAggregator(agg));
+		manager.calculateCorrelations(file).forEach(Application::logCorrelation);
 	}
 
 	private static void logCorrelationStart(CorrelationType type, DataFile file) {

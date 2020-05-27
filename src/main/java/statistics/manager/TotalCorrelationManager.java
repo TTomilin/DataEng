@@ -16,11 +16,13 @@ import statistics.mapper.wrapper.CountrySetWrapper;
 
 public class TotalCorrelationManager extends CorrelationManager {
 
-	private static final Integer COMBINATION_LENGTH = 3;
-
-	private CombinationGenerator generator = new TotalCombinationGenerator(COMBINATION_LENGTH);
+	private CombinationGenerator generator = new TotalCombinationGenerator(combinationLength);
 	private CountWrapper countWrapper = new CountWrapper();
 	private TotalCorrelationComputer computer = new TotalCorrelationComputer();
+
+	public TotalCorrelationManager(Integer combinationLength) {
+		super(combinationLength);
+	}
 
 	@Override
 	protected JavaRDD<DataEntry> applyRanking(JavaRDD<DataEntry> javaRDD) {

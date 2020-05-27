@@ -13,6 +13,7 @@ import org.paukov.combinatorics.CombinatoricsFactory;
 import org.paukov.combinatorics.Generator;
 import org.paukov.combinatorics.ICombinatoricsVector;
 
+import lombok.RequiredArgsConstructor;
 import scala.Tuple2;
 import schema.CorrelationMeasurePair;
 import schema.entry.DataEntry;
@@ -23,7 +24,10 @@ import schema.country.MultiCountryPair;
 /**
  * Maps the given input Row into a collection of combinations of every country pair
  */
+@RequiredArgsConstructor
 public abstract class CombinationGenerator implements FlatMapFunction<Tuple2<Timestamp, Iterable<DataEntry>>, DataEntryCollection> {
+
+	protected final int combinationLength;
 
 	@Override
 	public Iterator<DataEntryCollection> call(Tuple2<Timestamp, Iterable<DataEntry>> tuple) {
@@ -43,19 +47,13 @@ public abstract class CombinationGenerator implements FlatMapFunction<Tuple2<Tim
 	protected abstract double getMeasureFromEnergyData(DataEntry data);
 
 	/**
-	 * Override to designate the length of combinations
-	 * @return
-	 */
-	protected abstract Integer getCombinationLength();
-
-	/**
 	 * Generates combinations from the list of energy data of size depicted by the implementing class
 	 * @param dataEntries
 	 * @return
 	 */
 	public List<ICombinatoricsVector<DataEntry>> generateCombinations(Collection<DataEntry> dataEntries) {
 		ICombinatoricsVector<DataEntry> initialVector = CombinatoricsFactory.createVector(dataEntries);
-		Generator<DataEntry> generator = CombinatoricsFactory.createSimpleCombinationGenerator(initialVector, getCombinationLength());
+		Generator<DataEntry> generator = CombinatoricsFactory.createSimpleCombinationGenerator(initialVector, combinationLength);
 		return generator.generateAllObjects();
 	}
 

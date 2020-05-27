@@ -41,7 +41,11 @@ public class TotalCorrelationComputer extends CorrelationComputer<Iterable<DataE
 				.map(BigDecimal::valueOf)
 				.reduce(BigDecimal.ONE, BigDecimal::multiply)
 				.doubleValue();
-		return jointProbability * log10(jointProbability / marginalProbabilities);
+		return jointProbability * log2(jointProbability / marginalProbabilities);
+	}
+
+	private double log2(double x) {
+		return log10(x) / log10(2);
 	}
 
 	private Map<String, double[]> getMarginalProbabilities(Collection<DataEntrySet> entrySets, double rowCount) {

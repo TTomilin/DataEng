@@ -8,6 +8,8 @@ import org.apache.spark.api.java.function.FilterFunction;
 import org.apache.spark.sql.Row;
 
 import data.DataFile;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import scala.Serializable;
 import scala.Tuple2;
 import schema.country.CountryCollection;
@@ -22,14 +24,19 @@ import statistics.mapper.wrapper.CountryPairWrapper;
 import statistics.reducer.FormulaComponentAggregator;
 import statistics.reducer.FormulaComponentSummator;
 
+@Getter
+@RequiredArgsConstructor
 public abstract class CorrelationManager implements ICorrelationManager, Serializable {
 
 	protected static final double THRESHOLD = 0.5;
+	protected static final Integer DEFAULT_COMBINATION_LENGTH = 2;
 	protected static final String PATH_TEMPLATE = "src/main/resources/energy-data/%s.csv";
 	protected FormulaComponentSummator componentSummator = new FormulaComponentSummator();
 	protected CountryPairWrapper countryPairWrapper = new CountryPairWrapper();
 	protected FormulaComponentAggregator componentAggregator = new FormulaComponentAggregator();
 	protected EnergyDataConverter converter = new EnergyDataConverter();
+
+	protected final Integer combinationLength;
 
 	@Override
 	public Collection<Tuple2<CountryCollection, Double>> calculateCorrelations(DataFile dataFile) {
