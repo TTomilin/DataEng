@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import scala.Serializable;
-import schema.MultiCountryPair;
+import schema.country.MultiCountryPair;
 
 @Getter
 @ToString

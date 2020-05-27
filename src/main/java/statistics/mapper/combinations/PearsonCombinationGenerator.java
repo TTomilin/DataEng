@@ -1,18 +1,15 @@
 package statistics.mapper.combinations;
 
-import schema.DataEntry;
+import schema.entry.DataEntry;
 
 public class PearsonCombinationGenerator extends CombinationGenerator {
 
-	private static final int COMBINATION_LENGTH = 2;
+	public PearsonCombinationGenerator(int combinationLength) {
+		super(combinationLength);
+	}
 
 	@Override
 	protected double getMeasureFromEnergyData(DataEntry data) {
 		return data.getValue();
-	}
-
-	@Override
-	protected Integer getCombinationLength() {
-		return COMBINATION_LENGTH;
 	}
 }
