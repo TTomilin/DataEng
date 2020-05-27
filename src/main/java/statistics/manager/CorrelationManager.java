@@ -22,7 +22,7 @@ import statistics.reducer.FormulaComponentSummator;
 
 public abstract class CorrelationManager implements ICorrelationManager, Serializable {
 
-	private static final double THRESHOLD = 0.5;
+	private static final double THRESHOLD = 0;
 	private static final String PATH_TEMPLATE = "src/main/resources/energy-data/%s.csv";
 	private FormulaComponentSummator componentSummator = new FormulaComponentSummator();
 	private CountryPairWrapper countryPairWrapper = new CountryPairWrapper();

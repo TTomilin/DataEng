@@ -1,16 +1,13 @@
 package statistics;
 
-import statistics.manager.CorrelationManager;
-import statistics.manager.PearsonCorrelationManager;
-import statistics.manager.PearsonMultiCorrelationManager;
-import statistics.manager.SpearmanCorrelationManager;
-import statistics.manager.TotalCorrelationManager;
+import statistics.manager.*;
 
 public enum CorrelationType {
 	PEARSON			(PearsonCorrelationManager.class),
 	SPEARMAN		(SpearmanCorrelationManager.class),
 	TOTAL			(TotalCorrelationManager.class),
-	PEARSON_MULTI	(PearsonMultiCorrelationManager.class);
+	PEARSON_MULTI	(PearsonMultiCorrelationManager.class),
+	SPEARMAN_MULTI 	(SpearmanMultiCorrelationManager.class);
 
 	private Class<? extends CorrelationManager> managerClass;
 

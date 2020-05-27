@@ -15,6 +15,7 @@ import static data.DataFile.WIND_100ROWS;
 import static data.DataFile.WIND_10ROWS_7COUNTRIES;
 import static statistics.Aggregator.AVG;
 import static statistics.CorrelationType.PEARSON_MULTI;
+import static statistics.CorrelationType.SPEARMAN_MULTI;
 
 public class Application {
 
@@ -32,6 +33,7 @@ public class Application {
 
 		// Milestone 2
 		correlation(PEARSON_MULTI, WIND_10ROWS_7COUNTRIES, AVG);
+		correlation(SPEARMAN_MULTI, WIND_10ROWS_7COUNTRIES, AVG);
 		correlation(PEARSON_MULTI, WIND_100ROWS, AVG);
 	}
 
