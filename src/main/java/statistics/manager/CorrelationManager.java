@@ -30,7 +30,9 @@ public abstract class CorrelationManager implements ICorrelationManager, Seriali
 
 	protected static final double THRESHOLD = 0.5;
 	protected static final Integer DEFAULT_COMBINATION_LENGTH = 2;
-	protected static final String PATH_TEMPLATE = "src/main/resources/energy-data/%s.csv";
+//	protected static final String PATH_TEMPLATE = "src/main/resources/energy-data/%s.csv";
+	protected static final String PATH_TEMPLATE = "%s.csv";
+
 	protected FormulaComponentSummator componentSummator = new FormulaComponentSummator();
 	protected CountryPairWrapper countryPairWrapper = new CountryPairWrapper();
 	protected FormulaComponentAggregator componentAggregator = new FormulaComponentAggregator();

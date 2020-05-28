@@ -16,9 +16,7 @@ import statistics.manager.PearsonMultiCorrelationManager;
 import statistics.manager.SpearmanCorrelationManager;
 import statistics.manager.TotalCorrelationManager;
 
-import static data.DataFile.SOLAR_DISCRETIZED;
-import static data.DataFile.WIND_100ROWS;
-import static data.DataFile.WIND_DISCRETIZED;
+import static data.DataFile.*;
 import static statistics.Aggregator.AVG;
 import static statistics.CorrelationType.PEARSON;
 import static statistics.CorrelationType.PEARSON_MULTI;
@@ -29,7 +27,7 @@ public class Application {
 
 	private static Map<CorrelationType, CorrelationManager> managers;
 	private static LogLevel logLevel = LogLevel.WARN;
-	private static final Integer P_VALUE = 5; // Define the p-value here
+	private static final Integer P_VALUE = 7; // Define the p-value here
 
 	public static void main(String[] args) {
 		setHadoopHome(args);

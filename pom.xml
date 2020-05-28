@@ -29,6 +29,16 @@
 			<version>2.4.5</version>
 		</dependency>
 
+		<!-- AZURE-needed dependency-->
+		<!-- https://mvnrepository.com/artifact/org.jmockit/jmockit -->
+		<dependency>
+			<groupId>org.jmockit</groupId>
+			<artifactId>jmockit</artifactId>
+			<version>1.8</version>
+			<scope>test</scope>
+		</dependency>
+
+
 		<!-- HADOOP -->
 		<dependency>
 			<groupId>org.apache.hadoop</groupId>
