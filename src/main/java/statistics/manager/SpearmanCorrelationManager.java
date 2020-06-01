@@ -24,6 +24,10 @@ public class SpearmanCorrelationManager extends CorrelationManager {
 		super(DEFAULT_COMBINATION_LENGTH);
 	}
 
+	public SpearmanCorrelationManager(Integer combinationLength) {
+		super(DEFAULT_COMBINATION_LENGTH);
+	}
+
 	@Override
 	protected JavaRDD<DataEntry> applyRanking(JavaRDD<DataEntry> javaRDD) {
 		return javaRDD

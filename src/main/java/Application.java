@@ -10,21 +10,14 @@ import schema.country.CountryCollection;
 import session.SessionWrapper;
 import statistics.Aggregator;
 import statistics.CorrelationType;
-import statistics.manager.CorrelationManager;
-import statistics.manager.PearsonCorrelationManager;
-import statistics.manager.PearsonMultiCorrelationManager;
-import statistics.manager.SpearmanCorrelationManager;
-import statistics.manager.TotalCorrelationManager;
+import statistics.manager.*;
 
 import static data.DataFile.SOLAR_DISCRETIZED;
 import static data.DataFile.WIND_100ROWS;
 import static data.DataFile.WIND_DISCRETIZED;
 import static statistics.Aggregator.AVG;
-import static statistics.CorrelationType.PEARSON;
-import static statistics.CorrelationType.PEARSON_MULTI;
-import static statistics.CorrelationType.SPEARMAN_MULTI;
-import static statistics.CorrelationType.SPEARMAN;
-import static statistics.CorrelationType.TOTAL;
+import static statistics.CorrelationType.*;
+
 public class Application {
 
 	private static Map<CorrelationType, CorrelationManager> managers;
@@ -43,8 +36,8 @@ public class Application {
 		// correlation(SPEARMAN, SOLAR);
 
 		// Milestone 2
-		correlation(PEARSON_MULTI, WIND_100ROWS, Optional.of(AVG));
-
+		//correlation(PEARSON_MULTI, WIND_100ROWS, Optional.of(AVG));
+		correlation(SPEARMAN_MULTI, WIND_100ROWS, Optional.of(AVG));
 		correlation(TOTAL, WIND_DISCRETIZED);
 		correlation(TOTAL, SOLAR_DISCRETIZED);
 	}
@@ -61,6 +54,7 @@ public class Application {
 				PEARSON, new PearsonCorrelationManager(),
 				SPEARMAN, new SpearmanCorrelationManager(),
 				PEARSON_MULTI, new PearsonMultiCorrelationManager(P_VALUE),
+				SPEARMAN_MULTI, new SpearmanMultiCorrelationManager(P_VALUE),
 				TOTAL, new TotalCorrelationManager(P_VALUE)
 		);
 	}
@@ -72,7 +66,14 @@ public class Application {
 	private static void correlation(CorrelationType type, DataFile file, Optional<Aggregator> aggregator) {
 		logCorrelationStart(type, file);
 		CorrelationManager manager = managers.get(type);
-		aggregator.ifPresent(agg -> ((PearsonMultiCorrelationManager) manager).updateAggregator(agg));
+		aggregator.ifPresent(agg -> {
+			switch (type) {
+				case PEARSON_MULTI:
+					((PearsonMultiCorrelationManager) manager).updateAggregator(agg);
+				case SPEARMAN_MULTI:
+					((SpearmanMultiCorrelationManager) manager).updateAggregator(agg);
+			};
+		});
 		manager.calculateCorrelations(file).forEach(Application::logCorrelation);
 	}
 

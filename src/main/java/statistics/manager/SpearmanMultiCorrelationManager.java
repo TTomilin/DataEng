@@ -4,17 +4,26 @@ import statistics.Aggregator;
 import statistics.mapper.combinations.CombinationGenerator;
 import statistics.mapper.combinations.SpearmanMultiCombinationGenerator;
 
+import static statistics.Aggregator.AVG;
+
 
 public class SpearmanMultiCorrelationManager extends SpearmanCorrelationManager {
 
-    private final CombinationGenerator generator;
+    private static final Aggregator DEFAULT_AGGREGATOR = AVG;
 
-    public SpearmanMultiCorrelationManager(Aggregator aggregator) {
-        this.generator = new SpearmanMultiCombinationGenerator(aggregator);
+    private final SpearmanMultiCombinationGenerator generator;
+
+    public SpearmanMultiCorrelationManager(Integer combinationLength) {
+        super(combinationLength);
+        this.generator = new SpearmanMultiCombinationGenerator(combinationLength, DEFAULT_AGGREGATOR);
     }
 
     @Override
     protected CombinationGenerator getCombinationGenerator() {
         return generator;
+    }
+
+    public void updateAggregator(Aggregator aggregator) {
+        generator.setAggregator(aggregator);
     }
 }
