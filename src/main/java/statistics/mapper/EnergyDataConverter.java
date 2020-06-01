@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.spark.api.java.function.FlatMapFunction;
 import org.apache.spark.sql.Row;
 
-import schema.DataEntry;
+import schema.entry.DataEntry;
 
 /**
  * Maps given Spark SQL Row into an DataEntry entry for better internal representation

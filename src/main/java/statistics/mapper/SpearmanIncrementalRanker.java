@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.spark.api.java.function.FlatMapFunction;
 
 import scala.Tuple2;
-import schema.DataEntry;
+import schema.entry.DataEntry;
 
 /**
  * Rank the data incrementally using an atomic integer

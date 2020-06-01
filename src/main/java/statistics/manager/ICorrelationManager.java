@@ -4,8 +4,8 @@ import java.util.Collection;
 
 import data.DataFile;
 import scala.Tuple2;
-import schema.MultiCountryPair;
+import schema.country.CountryCollection;
 
 public interface ICorrelationManager {
-	Collection<Tuple2<MultiCountryPair, Double>> calculateCorrelations(DataFile dataFile);
+	Collection<Tuple2<CountryCollection, Double>> calculateCorrelations(DataFile dataFile);
 }

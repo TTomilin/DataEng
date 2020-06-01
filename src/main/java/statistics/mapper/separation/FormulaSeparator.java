@@ -7,7 +7,8 @@ import org.apache.spark.api.java.function.PairFlatMapFunction;
 
 import scala.Tuple2;
 import schema.CorrelationMeasurePair;
-import schema.DataEntryPair;
+import schema.entry.DataEntryCollection;
+import schema.entry.DataEntryPair;
 import statistics.formula.FormulaComponentKey;
 import statistics.formula.FormulaComponentType;
 import statistics.formula.FormulaComponentValue;
@@ -17,15 +18,16 @@ import statistics.formula.FormulaComponentValue;
  * Implement the separation of the necessary formula components
  * for a specific correlation to store its components separately
  */
-public abstract class FormulaSeparator implements PairFlatMapFunction<DataEntryPair, FormulaComponentKey, FormulaComponentValue> {
+public abstract class FormulaSeparator implements PairFlatMapFunction<DataEntryCollection, FormulaComponentKey, FormulaComponentValue> {
 
 	/**
 	 * Maps the given DataEntryPair to formula components required for the statistic calculation
-	 * @param pair
+	 * @param collection
 	 * @return
 	 */
 	@Override
-	public Iterator<Tuple2<FormulaComponentKey, FormulaComponentValue>> call(DataEntryPair pair) {
+	public Iterator<Tuple2<FormulaComponentKey, FormulaComponentValue>> call(DataEntryCollection collection) {
+		DataEntryPair pair = (DataEntryPair) collection;
 		CorrelationMeasurePair valuePair = pair.getCorrelationMeasurePair();
 		double x = valuePair.getFirstValue();
 		double y = valuePair.getSecondValue();

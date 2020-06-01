@@ -9,24 +9,26 @@ import org.paukov.combinatorics.Generator;
 import org.paukov.combinatorics.ICombinatoricsVector;
 import org.paukov.combinatorics.util.ComplexCombinationGenerator;
 
-import lombok.RequiredArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
 import schema.CorrelationMeasurePair;
-import schema.DataEntry;
-import schema.DataEntryPair;
-import schema.MultiCountryPair;
+import schema.country.MultiCountryPair;
+import schema.entry.DataEntry;
+import schema.entry.DataEntryCollection;
+import schema.entry.DataEntryPair;
 import statistics.Aggregator;
 
-@RequiredArgsConstructor
+@Setter
 public class PearsonMultiCombinationGenerator extends PearsonCombinationGenerator {
 
-	private static final int COMBINATION_LENGTH = 5; 	// Define the p value
-	private static final int N_COMBINATIONS = 2; 		// Since we have pairs
+	private static final int N_COMBINATIONS = 2; // For reducing input and formulating pairs
 
-	private final Aggregator aggregator;
+	@NonNull
+	private Aggregator aggregator;
 
-	@Override
-	protected Integer getCombinationLength() {
-		return COMBINATION_LENGTH;
+	public PearsonMultiCombinationGenerator(int combinationLength, Aggregator aggregator) {
+		super(combinationLength);
+		this.aggregator = aggregator;
 	}
 
 	/**
@@ -42,7 +44,7 @@ public class PearsonMultiCombinationGenerator extends PearsonCombinationGenerato
 	 * @return
 	 */
 	@Override
-	protected Collection<DataEntryPair> toDataEntryPairs(ICombinatoricsVector<DataEntry> dataEntryVector) {
+	protected Collection<DataEntryCollection> toDataEntryPairs(ICombinatoricsVector<DataEntry> dataEntryVector) {
 		Generator<ICombinatoricsVector<DataEntry>> generator = new ComplexCombinationGenerator<>(dataEntryVector, N_COMBINATIONS);
 		List<ICombinatoricsVector<ICombinatoricsVector<DataEntry>>> combinatoricsVectorsList = generator.generateAllObjects();
 		return combinatoricsVectorsList.stream().map(this::toDataEntryPair).collect(Collectors.toSet());
