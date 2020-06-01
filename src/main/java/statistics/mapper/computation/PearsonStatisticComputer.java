@@ -1,12 +1,12 @@
 package statistics.mapper.computation;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.Map;
 
 import statistics.formula.FormulaComponentType;
 import statistics.formula.FormulaComponentValue;
 
+import static java.lang.Math.sqrt;
 import static statistics.formula.FormulaComponentType.COUNT;
 import static statistics.formula.FormulaComponentType.FIRST_ELEMENT;
 import static statistics.formula.FormulaComponentType.FIRST_SQUARED;
@@ -20,8 +20,6 @@ import static statistics.formula.FormulaComponentType.SECOND_SQUARED;
  */
 public class PearsonStatisticComputer extends StatisticComputer {
 
-	private final MathContext mathContext = MathContext.DECIMAL64;
-
 	@Override
 	public Double call(Map<FormulaComponentType, FormulaComponentValue> formulaComponents) {
 		BigDecimal count = new BigDecimal(formulaComponents.get(COUNT).getValue());
@@ -32,10 +30,10 @@ public class PearsonStatisticComputer extends StatisticComputer {
 		BigDecimal XDotY = new BigDecimal(formulaComponents.get(PRODUCT).getValue());
 
 		BigDecimal numerator = count.multiply(XDotY).subtract(sumX.multiply(sumY));
-		BigDecimal left = count.multiply(sumXSquared).subtract(sumX.pow(2)).sqrt(mathContext);
-		BigDecimal right = count.multiply(sumYSquared).subtract(sumY.pow(2)).sqrt(mathContext);
-		BigDecimal denominator = left.multiply(right);
+		double left = sqrt(count.multiply(sumXSquared).subtract(sumX.pow(2)).doubleValue());
+		double right = sqrt(count.multiply(sumYSquared).subtract(sumY.pow(2)).doubleValue());
+		double denominator = left * right;
 
-		return numerator.divide(denominator, mathContext).doubleValue();
+		return numerator.doubleValue() / denominator;
 	}
 }

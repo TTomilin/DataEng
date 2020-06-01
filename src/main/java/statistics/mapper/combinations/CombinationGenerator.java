@@ -2,6 +2,7 @@ package statistics.mapper.combinations;
 
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -16,10 +17,10 @@ import org.paukov.combinatorics.ICombinatoricsVector;
 import lombok.RequiredArgsConstructor;
 import scala.Tuple2;
 import schema.CorrelationMeasurePair;
+import schema.country.MultiCountryPair;
 import schema.entry.DataEntry;
 import schema.entry.DataEntryCollection;
 import schema.entry.DataEntryPair;
-import schema.country.MultiCountryPair;
 
 /**
  * Maps the given input Row into a collection of combinations of every country pair
@@ -65,8 +66,14 @@ public abstract class CombinationGenerator implements FlatMapFunction<Tuple2<Tim
 	protected Collection<DataEntryCollection> toDataEntryPairs(ICombinatoricsVector<DataEntry> vector) {
 		DataEntry firstEntry = vector.getValue(0);
 		DataEntry secondEntry = vector.getValue(1);
-		MultiCountryPair multiCountryPair = new MultiCountryPair(Set.of(firstEntry.getCountry()), Set.of(secondEntry.getCountry()));
+		Set<String> firstSet = new HashSet<>();
+		Set<String> secondSet = new HashSet<>();
+		firstSet.add(firstEntry.getCountry());
+		secondSet.add(secondEntry.getCountry());
+		MultiCountryPair multiCountryPair = new MultiCountryPair(firstSet, secondSet);
 		CorrelationMeasurePair valuePair = new CorrelationMeasurePair(getMeasureFromEnergyData(firstEntry), getMeasureFromEnergyData(secondEntry));
-		return Set.of(new DataEntryPair(multiCountryPair, valuePair));
+		Collection<DataEntryCollection> pairSet = new HashSet<>();
+		pairSet.add(new DataEntryPair(multiCountryPair, valuePair));
+		return pairSet;
 	}
 }
