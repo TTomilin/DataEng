@@ -70,8 +70,10 @@ public class Application {
 			switch (type) {
 				case PEARSON_MULTI:
 					((PearsonMultiCorrelationManager) manager).updateAggregator(agg);
+					break;
 				case SPEARMAN_MULTI:
 					((SpearmanMultiCorrelationManager) manager).updateAggregator(agg);
+					break;
 			};
 		});
 		manager.calculateCorrelations(file).forEach(Application::logCorrelation);
