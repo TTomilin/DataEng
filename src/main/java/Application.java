@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -55,12 +56,11 @@ public class Application {
 	}
 
 	private static void initializeManagers() {
-		managers = Map.of(
-				PEARSON, new PearsonCorrelationManager(),
-				SPEARMAN, new SpearmanCorrelationManager(),
-				PEARSON_MULTI, new PearsonMultiCorrelationManager(P_VALUE),
-				TOTAL, new TotalCorrelationManager(P_VALUE)
-		);
+		managers = new HashMap<>();
+		managers.put(PEARSON, new PearsonCorrelationManager());
+		managers.put(SPEARMAN, new SpearmanCorrelationManager());
+		managers.put(PEARSON_MULTI, new PearsonMultiCorrelationManager(P_VALUE));
+		managers.put(TOTAL, new TotalCorrelationManager(P_VALUE));
 	}
 
 	private static void correlation(CorrelationType type, DataFile file) {

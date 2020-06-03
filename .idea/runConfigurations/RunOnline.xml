@@ -1,5 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Spark Livy Interactive Session Console(Scala)" type="SubmitSparkJob_Configuration" factoryName="HDInsight Spark">
+  <configuration default="false" name="RunOnline" type="SubmitSparkJob_Configuration" factoryName="HDInsight Spark">
+    <module name="data-eng" />
     <spark-job-configuration>
       <local-run>
         <spark-local-run-configurable-model>
@@ -17,34 +18,34 @@
         </spark-local-run-configurable-model>
       </local-run>
       <focused-tab-index>1</focused-tab-index>
-      <spark_submission artifact_name="data-eng:jar" cluster_mapped_id="data-eng" cluster_name="data-eng" is_local_artifact="false" job_name="Spark Livy Interactive Session Console(Scala)" local_artifact_path="" classname="Application">
+      <spark_submission artifact_name="data-eng:jar" cluster_mapped_id="data-eng-new" cluster_name="data-eng-new" is_local_artifact="true" job_name="RunOnline" local_artifact_path="$PROJECT_DIR$/data_eng_jar/data-eng.jar" classname="Application">
         <cmd_line_args />
         <jobConfigs>
           <array>
             <option value="driverMemory" />
-            <option value="4G" />
+            <option value="28G" />
           </array>
           <array>
             <option value="driverCores" />
-            <option value="1" />
+            <option value="8" />
           </array>
           <array>
             <option value="executorMemory" />
-            <option value="4G" />
+            <option value="48G" />
           </array>
           <array>
             <option value="executorCores" />
-            <option value="1" />
+            <option value="32" />
           </array>
           <array>
             <option value="numExecutors" />
-            <option value="5" />
+            <option value="4" />
           </array>
         </jobConfigs>
         <ref_files />
         <ref_jars />
         <ssh_cert auth_type="UsePassword" private_key_path="" user="sshuser" remote_debug_enabled="false" />
-        <job_upload_storage storage_account="dataengenergystorage" upload_path="wasbs://data-eng-2020-05-28t12-43-38-894z@dataengenergystorage.blob.core.windows.net/SparkSubmission/" selected_container="data-eng-2020-05-28t12-43-38-894z" storage_account_type="BLOB" adl_root_path="" />
+        <job_upload_storage storage_account="dataengnewhdistorage" upload_path="wasbs://data-eng-new-2020-06-03t11-45-37-990z@dataengnewhdistorage.blob.core.windows.net/SparkSubmission/" selected_container="data-eng-new-2020-06-03t11-45-37-990z" storage_account_type="BLOB" adl_root_path="" />
       </spark_submission>
     </spark-job-configuration>
     <method v="2">

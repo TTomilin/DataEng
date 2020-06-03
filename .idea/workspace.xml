@@ -6,7 +6,188 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a2b263e8-ce40-45a2-9f9d-e66a2a6cf3de" name="Default Changelist" comment="" />
+    <list default="true" id="a2b263e8-ce40-45a2-9f9d-e66a2a6cf3de" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/RoaringBitmap-0.7.45.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/activation-1.1.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/aircompressor-0.10.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/animal-sniffer-annotations-1.17.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/antlr4-runtime-4.7.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/aopalliance-repackaged-2.4.0-b34.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/apacheds-i18n-2.0.0-M15.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/apacheds-kerberos-codec-2.0.0-M15.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/api-asn1-api-1.0.0-M20.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/api-util-1.0.0-M20.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/arrow-format-0.10.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/arrow-memory-0.10.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/arrow-vector-0.10.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/avro-1.8.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/avro-ipc-1.8.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/avro-mapred-1.8.2-hadoop2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/checker-qual-2.5.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/chill-java-0.9.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/chill_2.12-0.9.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/combinatoricslib-2.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/commons-beanutils-1.7.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/commons-cli-1.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/commons-codec-1.11.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/commons-collections-3.2.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/commons-collections4-4.4.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/commons-compiler-3.0.9.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/commons-compress-1.8.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/commons-configuration-1.6.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/commons-crypto-1.0.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/commons-daemon-1.0.13.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/commons-digester-1.8.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/commons-httpclient-3.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/commons-io-2.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/commons-lang-2.6.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/commons-lang3-3.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/commons-logging-1.1.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/commons-math3-3.6.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/commons-net-3.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/compress-lzf-1.0.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/curator-client-2.6.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/curator-framework-2.6.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/curator-recipes-2.6.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/data-eng.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/error_prone_annotations-2.2.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/failureaccess-1.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/flatbuffers-1.2.0-3f79e055.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/gson-2.2.4.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/guava-27.0-jre.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/hadoop-annotations-2.6.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/hadoop-auth-2.6.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/hadoop-client-2.6.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/hadoop-common-2.6.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/hadoop-hdfs-3.2.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/hadoop-mapreduce-client-app-2.6.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/hadoop-mapreduce-client-common-2.6.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/hadoop-mapreduce-client-core-2.6.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/hadoop-mapreduce-client-jobclient-2.6.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/hadoop-mapreduce-client-shuffle-2.6.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/hadoop-yarn-api-2.6.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/hadoop-yarn-client-2.6.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/hadoop-yarn-common-2.6.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/hadoop-yarn-server-common-2.6.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/hk2-api-2.4.0-b34.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/hk2-locator-2.4.0-b34.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/hk2-utils-2.4.0-b34.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/hppc-0.7.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/htrace-core-3.0.4.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/htrace-core4-4.1.0-incubating.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/httpclient-4.2.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/httpcore-4.2.4.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/ivy-2.4.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/j2objc-annotations-1.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jackson-annotations-2.6.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jackson-core-2.6.7.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jackson-core-asl-1.9.13.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jackson-databind-2.6.7.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jackson-jaxrs-1.9.13.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jackson-mapper-asl-1.9.13.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jackson-module-paranamer-2.7.9.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jackson-module-scala_2.12-2.6.7.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jackson-xc-1.9.13.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/janino-3.0.9.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/javassist-3.18.1-GA.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/javax.annotation-api-1.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/javax.inject-2.4.0-b34.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/javax.servlet-api-3.1.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/javax.ws.rs-api-2.0.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jaxb-api-2.2.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jcl-over-slf4j-1.7.16.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jersey-client-2.22.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jersey-common-2.22.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jersey-container-servlet-2.22.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jersey-container-servlet-core-2.22.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jersey-core-1.19.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jersey-guava-2.22.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jersey-media-jaxb-2.22.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jersey-server-1.19.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jersey-server-2.22.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jetty-http-9.3.24.v20180605.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jetty-io-9.3.24.v20180605.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jetty-server-9.3.24.v20180605.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jetty-util-6.1.26.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jetty-util-9.3.24.v20180605.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jetty-util-ajax-9.3.24.v20180605.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/joda-time-2.9.9.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/json4s-ast_2.12-3.5.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/json4s-core_2.12-3.5.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/json4s-jackson_2.12-3.5.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/json4s-scalap_2.12-3.5.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jsr305-1.3.9.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jsr311-api-1.1.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/jul-to-slf4j-1.7.16.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/kryo-shaded-4.0.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/leveldbjni-all-1.8.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/log4j-1.2.17.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/lz4-java-1.4.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/metrics-core-3.1.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/metrics-graphite-3.1.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/metrics-json-3.1.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/metrics-jvm-3.1.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/minlog-1.3.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/netty-3.10.5.Final.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/netty-all-4.0.52.Final.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/objenesis-2.5.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/orc-core-1.5.5-nohive.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/orc-mapreduce-1.5.5-nohive.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/orc-shims-1.5.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/oro-2.0.8.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/osgi-resource-locator-1.0.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/paranamer-2.8.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/parquet-column-1.10.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/parquet-common-1.10.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/parquet-encoding-1.10.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/parquet-format-2.4.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/parquet-hadoop-1.10.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/parquet-jackson-1.10.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/protobuf-java-2.5.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/py4j-0.10.7.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/pyrolite-4.13.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/scala-library-2.12.10.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/scala-parser-combinators_2.12-1.1.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/scala-reflect-2.12.10.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/scala-xml_2.12-1.0.6.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/shims-0.7.45.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/slf4j-api-1.7.16.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/slf4j-log4j12-1.7.16.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/snappy-java-1.1.7.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/spark-catalyst_2.12-2.4.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/spark-core_2.12-2.4.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/spark-kvstore_2.12-2.4.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/spark-launcher_2.12-2.4.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/spark-network-common_2.12-2.4.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/spark-network-shuffle_2.12-2.4.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/spark-sketch_2.12-2.4.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/spark-sql_2.12-2.4.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/spark-tags_2.12-2.4.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/spark-unsafe_2.12-2.4.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/stax-api-1.0-2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/stream-2.7.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/univocity-parsers-2.7.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/unused-1.0.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/validation-api-1.1.0.Final.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/xbean-asm6-shaded-4.8.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/xmlenc-0.52.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/xz-1.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/zookeeper-3.4.6.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_eng_jar/zstd-jni-1.3.2-2.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/data_eng_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/data_eng_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Spark_Livy_Interactive_Session_Console_Scala_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/RunOffline.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/statistics/mapper/combinations/CombinationGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/statistics/mapper/combinations/CombinationGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/statistics/mapper/combinations/TotalCombinationGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/statistics/mapper/combinations/TotalCombinationGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/statistics/mapper/computation/PearsonStatisticComputer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/statistics/mapper/computation/PearsonStatisticComputer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/statistics/mapper/separation/PearsonFormulaSeparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/statistics/mapper/separation/PearsonFormulaSeparator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/statistics/mapper/separation/SpearmanFormulaSeparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/statistics/mapper/separation/SpearmanFormulaSeparator.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,12 +239,13 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/data" />
     <property name="project.structure.last.edited" value="Artifacts" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.3952569" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunDashboard">
@@ -78,64 +260,10 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Apache Spark on HDInsight.Spark Livy Interactive Session Console(Scala)">
-    <configuration name="RunOnline" type="SubmitSparkJob_Configuration" factoryName="HDInsight Spark">
-      <module name="data-eng" />
-      <spark-job-configuration>
-        <local-run>
-          <spark-local-run-configurable-model>
-            <is-parallel-execution>false</is-parallel-execution>
-            <is-pass-parent-envs>true</is-pass-parent-envs>
-            <program-parameters />
-            <working-directory>file://$PROJECT_DIR$</working-directory>
-            <envs>
-              <map />
-            </envs>
-            <vm-parameters />
-            <main-class>Application</main-class>
-            <classpath-module>data-eng</classpath-module>
-            <data-root>file://$PROJECT_DIR$/data</data-root>
-          </spark-local-run-configurable-model>
-        </local-run>
-        <focused-tab-index>0</focused-tab-index>
-        <spark_submission artifact_name="data-eng:jar" cluster_mapped_id="data-eng" cluster_name="data-eng" is_local_artifact="false" job_name="RunOnline" local_artifact_path="" classname="Application">
-          <cmd_line_args />
-          <jobConfigs>
-            <array>
-              <option value="driverMemory" />
-              <option value="4G" />
-            </array>
-            <array>
-              <option value="driverCores" />
-              <option value="1" />
-            </array>
-            <array>
-              <option value="executorMemory" />
-              <option value="4G" />
-            </array>
-            <array>
-              <option value="executorCores" />
-              <option value="1" />
-            </array>
-            <array>
-              <option value="numExecutors" />
-              <option value="5" />
-            </array>
-          </jobConfigs>
-          <ref_files />
-          <ref_jars />
-          <ssh_cert auth_type="UsePassword" private_key_path="" user="sshuser" remote_debug_enabled="false" />
-          <job_upload_storage storage_account="" upload_path="/SparkSubmission/" storage_account_type="SPARK_INTERACTIVE_SESSION" adl_root_path="" />
-        </spark_submission>
-      </spark-job-configuration>
-      <method v="2">
-        <option name="Make" enabled="true" />
-        <option name="RunConfigurationTask" enabled="true" run_configuration_name="Spark Livy Interactive Session Console(Scala)" run_configuration_type="SubmitSparkJob_Configuration" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Apache Spark on HDInsight.RunOnline">
     <list>
       <item itemvalue="Apache Spark on HDInsight.RunOnline" />
-      <item itemvalue="Apache Spark on HDInsight.Spark Livy Interactive Session Console(Scala)" />
+      <item itemvalue="Apache Spark on HDInsight.RunOffline" />
     </list>
   </component>
   <component name="SvnConfiguration">
@@ -153,6 +281,9 @@
       <workItem from="1590696815474" duration="706000" />
       <workItem from="1590697545163" duration="561000" />
       <workItem from="1590698125346" duration="4094000" />
+      <workItem from="1591125977827" duration="103000" />
+      <workItem from="1591126103872" duration="3029000" />
+      <workItem from="1591187260711" duration="927000" />
     </task>
     <servers />
   </component>

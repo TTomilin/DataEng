@@ -1,0 +1,55 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="RunOffline" type="SubmitSparkJob_Configuration" factoryName="HDInsight Spark">
+    <spark-job-configuration>
+      <local-run>
+        <spark-local-run-configurable-model>
+          <is-parallel-execution>false</is-parallel-execution>
+          <is-pass-parent-envs>true</is-pass-parent-envs>
+          <program-parameters />
+          <working-directory>file://$PROJECT_DIR$</working-directory>
+          <envs>
+            <map />
+          </envs>
+          <vm-parameters />
+          <main-class>Application</main-class>
+          <classpath-module>data-eng</classpath-module>
+          <data-root>file://$PROJECT_DIR$/data</data-root>
+        </spark-local-run-configurable-model>
+      </local-run>
+      <focused-tab-index>1</focused-tab-index>
+      <spark_submission artifact_name="data-eng:jar" cluster_mapped_id="data-eng" is_local_artifact="false" job_name="RunOffline" local_artifact_path="" classname="Application">
+        <cmd_line_args />
+        <jobConfigs>
+          <array>
+            <option value="driverMemory" />
+            <option value="4G" />
+          </array>
+          <array>
+            <option value="driverCores" />
+            <option value="1" />
+          </array>
+          <array>
+            <option value="executorMemory" />
+            <option value="4G" />
+          </array>
+          <array>
+            <option value="executorCores" />
+            <option value="1" />
+          </array>
+          <array>
+            <option value="numExecutors" />
+            <option value="5" />
+          </array>
+        </jobConfigs>
+        <ref_files />
+        <ref_jars />
+        <ssh_cert auth_type="UsePassword" private_key_path="" user="sshuser" remote_debug_enabled="false" />
+        <job_upload_storage storage_account="dataengenergystorage" upload_path="wasbs://data-eng-2020-05-28t12-43-38-894z@dataengenergystorage.blob.core.windows.net/SparkSubmission/" selected_container="data-eng-2020-05-28t12-43-38-894z" storage_account_type="BLOB" adl_root_path="" />
+      </spark_submission>
+    </spark-job-configuration>
+    <method v="2">
+      <option name="Make" enabled="false" />
+      <option name="BuildArtifacts" enabled="true" />
+    </method>
+  </configuration>
+</component>
