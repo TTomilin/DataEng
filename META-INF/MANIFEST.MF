@@ -1,0 +1,76 @@
+Manifest-Version: 1.0
+Main-Class: nl.dataeng.tue.Application
+Class-Path: libs/slf4j-log4j12-1.7.16.jar libs/failureaccess-1.0.jar lib
+ s/netty-all-4.0.52.Final.jar libs/jetty-io-9.3.24.v20180605.jar libs/js
+ on4s-ast_2.12-3.5.3.jar libs/commons-compress-1.8.1.jar libs/arrow-vect
+ or-0.10.0.jar libs/activation-1.1.1.jar libs/curator-client-2.6.0.jar l
+ ibs/gson-2.2.4.jar libs/commons-logging-1.1.3.jar libs/jackson-module-s
+ cala_2.12-2.6.7.1.jar libs/hadoop-hdfs-3.2.1.jar libs/parquet-encoding-
+ 1.10.1.jar libs/xbean-asm6-shaded-4.8.jar libs/hadoop-client-2.6.5.jar 
+ libs/commons-cli-1.2.jar libs/shims-0.7.45.jar libs/jsr311-api-1.1.1.ja
+ r libs/jetty-server-9.3.24.v20180605.jar libs/py4j-0.10.7.jar libs/json
+ 4s-core_2.12-3.5.3.jar libs/hadoop-yarn-common-2.6.5.jar libs/compress-
+ lzf-1.0.3.jar libs/arrow-format-0.10.0.jar libs/metrics-graphite-3.1.5.
+ jar libs/httpcore-4.2.4.jar libs/j2objc-annotations-1.1.jar libs/hk2-lo
+ cator-2.4.0-b34.jar libs/commons-compiler-3.0.9.jar libs/zstd-jni-1.3.2
+ -2.jar libs/scala-reflect-2.12.10.jar libs/hk2-api-2.4.0-b34.jar libs/h
+ ppc-0.7.2.jar libs/commons-math3-3.6.1.jar libs/spark-kvstore_2.12-2.4.
+ 5.jar libs/jersey-core-1.19.jar libs/hadoop-yarn-server-common-2.6.5.ja
+ r libs/commons-crypto-1.0.0.jar libs/jackson-core-asl-1.9.13.jar libs/o
+ rc-mapreduce-1.5.5-nohive.jar libs/flatbuffers-1.2.0-3f79e055.jar libs/
+ apacheds-i18n-2.0.0-M15.jar libs/apacheds-kerberos-codec-2.0.0-M15.jar 
+ libs/jetty-util-ajax-9.3.24.v20180605.jar libs/hadoop-mapreduce-client-
+ app-2.6.5.jar libs/joda-time-2.9.9.jar libs/javax.servlet-api-3.1.0.jar
+  libs/RoaringBitmap-0.7.45.jar libs/api-util-1.0.0-M20.jar libs/hadoop-
+ mapreduce-client-jobclient-2.6.5.jar libs/commons-configuration-1.6.jar
+  libs/spark-network-common_2.12-2.4.5.jar libs/antlr4-runtime-4.7.jar l
+ ibs/oro-2.0.8.jar libs/guava-27.0-jre.jar libs/hadoop-common-2.6.5.jar 
+ libs/spark-launcher_2.12-2.4.5.jar libs/listenablefuture-9999.0-empty-t
+ o-avoid-conflict-with-guava.jar libs/spark-tags_2.12-2.4.5.jar libs/jer
+ sey-server-2.22.2.jar libs/commons-httpclient-3.1.jar libs/spark-networ
+ k-shuffle_2.12-2.4.5.jar libs/orc-core-1.5.5-nohive.jar libs/commons-da
+ emon-1.0.13.jar libs/javax.ws.rs-api-2.0.1.jar libs/parquet-common-1.10
+ .1.jar libs/parquet-format-2.4.0.jar libs/commons-lang-2.6.jar libs/jsr
+ 305-1.3.9.jar libs/htrace-core-3.0.4.jar libs/hadoop-yarn-api-2.6.5.jar
+  libs/commons-collections4-4.4.jar libs/json4s-jackson_2.12-3.5.3.jar l
+ ibs/janino-3.0.9.jar libs/hadoop-auth-2.6.5.jar libs/jackson-jaxrs-1.9.
+ 13.jar libs/zookeeper-3.4.6.jar libs/validation-api-1.1.0.Final.jar lib
+ s/hadoop-yarn-client-2.6.5.jar libs/spark-sketch_2.12-2.4.5.jar libs/js
+ on4s-scalap_2.12-3.5.3.jar libs/commons-lang3-3.5.jar libs/curator-reci
+ pes-2.6.0.jar libs/jersey-guava-2.22.2.jar libs/jersey-common-2.22.2.ja
+ r libs/metrics-core-3.1.5.jar libs/avro-ipc-1.8.2.jar libs/spark-cataly
+ st_2.12-2.4.5.jar libs/slf4j-api-1.7.16.jar libs/ivy-2.4.0.jar libs/sna
+ ppy-java-1.1.7.3.jar libs/leveldbjni-all-1.8.jar libs/commons-digester-
+ 1.8.jar libs/hadoop-mapreduce-client-common-2.6.5.jar libs/scala-xml_2.
+ 12-1.0.6.jar libs/osgi-resource-locator-1.0.1.jar libs/jersey-client-2.
+ 22.2.jar libs/jersey-container-servlet-core-2.22.2.jar libs/jetty-util-
+ 9.3.24.v20180605.jar libs/orc-shims-1.5.5.jar libs/xmlenc-0.52.jar libs
+ /commons-beanutils-1.7.0.jar libs/checker-qual-2.5.2.jar libs/spark-sql
+ _2.12-2.4.5.jar libs/avro-1.8.2.jar libs/unused-1.0.0.jar libs/httpclie
+ nt-4.2.5.jar libs/jetty-util-6.1.26.jar libs/paranamer-2.8.jar libs/air
+ compressor-0.10.jar libs/hadoop-annotations-2.6.5.jar libs/parquet-jack
+ son-1.10.1.jar libs/stream-2.7.0.jar libs/hadoop-mapreduce-client-shuff
+ le-2.6.5.jar libs/univocity-parsers-2.7.3.jar libs/spark-unsafe_2.12-2.
+ 4.5.jar libs/xz-1.5.jar libs/jcl-over-slf4j-1.7.16.jar libs/javassist-3
+ .18.1-GA.jar libs/jersey-container-servlet-2.22.2.jar libs/combinatoric
+ slib-2.2.jar libs/commons-io-2.5.jar libs/javax.inject-2.4.0-b34.jar li
+ bs/commons-codec-1.11.jar libs/pyrolite-4.13.jar libs/jackson-xc-1.9.13
+ .jar libs/chill-java-0.9.3.jar libs/commons-collections-3.2.2.jar libs/
+ stax-api-1.0-2.jar libs/chill_2.12-0.9.3.jar libs/jetty-http-9.3.24.v20
+ 180605.jar libs/api-asn1-api-1.0.0-M20.jar libs/scala-library-2.12.10.j
+ ar libs/jaxb-api-2.2.2.jar libs/jersey-server-1.19.jar libs/htrace-core
+ 4-4.1.0-incubating.jar libs/jackson-databind-2.6.7.3.jar libs/curator-f
+ ramework-2.6.0.jar libs/aopalliance-repackaged-2.4.0-b34.jar libs/jerse
+ y-media-jaxb-2.22.2.jar libs/hk2-utils-2.4.0-b34.jar libs/metrics-jvm-3
+ .1.5.jar libs/avro-mapred-1.8.2-hadoop2.jar libs/parquet-column-1.10.1.
+ jar libs/arrow-memory-0.10.0.jar libs/commons-net-3.1.jar libs/error_pr
+ one_annotations-2.2.0.jar libs/parquet-hadoop-1.10.1.jar libs/jackson-c
+ ore-2.6.7.jar libs/jackson-mapper-asl-1.9.13.jar libs/jackson-annotatio
+ ns-2.6.0.jar libs/objenesis-2.5.1.jar libs/metrics-json-3.1.5.jar libs/
+ jul-to-slf4j-1.7.16.jar libs/hadoop-mapreduce-client-core-2.6.5.jar lib
+ s/jackson-module-paranamer-2.7.9.jar libs/scala-parser-combinators_2.12
+ -1.1.0.jar libs/kryo-shaded-4.0.2.jar libs/javax.annotation-api-1.2.jar
+  libs/netty-3.10.5.Final.jar libs/protobuf-java-2.5.0.jar libs/lz4-java
+ -1.4.0.jar libs/animal-sniffer-annotations-1.17.jar libs/spark-core_2.1
+ 2-2.4.5.jar libs/log4j-1.2.17.jar libs/minlog-1.3.0.jar
+

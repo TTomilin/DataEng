@@ -8,7 +8,7 @@
 4. Enable "Annotation Processing" for the Lombok library under Project Settings -> Build -> Compiler 
 (the program will execute without it, but give errors at compile time)
 
-## Milestone 1 — choosing and preparing your data, introductory analysis
+## Milestone 1 — choosing and preparing your nl.dataeng.tue.data, introductory analysis
 
 For the first milestone, you are asked to:
 - Choose, download, load, and clean one or more datasets, where you expect to find
