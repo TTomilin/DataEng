@@ -28,9 +28,9 @@ public class SessionWrapper {
 
 	private static SparkConf getSparkConfig() {
 		return new SparkConf()
-				.setAppName("DataEng")
-				.setMaster("local[*]")
-				.set("spark.executor.memory", "4g");
+//				.setAppName("DataEng")
+				.setMaster("yarn");
+//				.set("spark.executor.memory", "4g");
 	}
 
 	public static void close() {

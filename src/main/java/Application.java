@@ -18,9 +18,12 @@ import statistics.manager.SpearmanCorrelationManager;
 import statistics.manager.TotalCorrelationManager;
 
 import static data.DataFile.SOLAR_DISCRETIZED;
-import static data.DataFile.WIND_100ROWS;
+import static data.DataFile.SOLAR;
+import static data.DataFile.WIND;
 import static data.DataFile.WIND_DISCRETIZED;
 import static statistics.Aggregator.AVG;
+import static statistics.Aggregator.MIN;
+import static statistics.Aggregator.MAX;
 import static statistics.CorrelationType.PEARSON;
 import static statistics.CorrelationType.PEARSON_MULTI;
 import static statistics.CorrelationType.SPEARMAN;
@@ -30,7 +33,7 @@ public class Application {
 
 	private static Map<CorrelationType, CorrelationManager> managers;
 	private static LogLevel logLevel = LogLevel.WARN;
-	private static final Integer P_VALUE = 5; // Define the p-value here
+	private static final Integer P_VALUE = 4; // Define the p-value here
 
 	public static void main(String[] args) {
 		setHadoopHome(args);
@@ -44,10 +47,16 @@ public class Application {
 		// correlation(SPEARMAN, SOLAR);
 
 		// Milestone 2
-		correlation(PEARSON_MULTI, WIND_100ROWS, Optional.of(AVG));
+		correlation(PEARSON_MULTI, WIND, Optional.of(AVG));
+//		correlation(PEARSON_MULTI, SOLAR, Optional.of(AVG));
+//		correlation(PEARSON_MULTI, WIND, Optional.of(MIN));
+//		correlation(PEARSON_MULTI, WIND, Optional.of(MAX));
 
-		correlation(TOTAL, WIND_DISCRETIZED);
-		correlation(TOTAL, SOLAR_DISCRETIZED);
+
+//		correlation(TOTAL, WIND_DISCRETIZED);
+//		correlation(TOTAL, SOLAR_DISCRETIZED);
+
+		SessionWrapper.getSession().stop();
 	}
 
 	private static void setHadoopHome(String[] args) {
