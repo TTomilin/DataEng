@@ -10,6 +10,11 @@ public enum DataFile {
 	SOLAR_DISCRETIZED			("solar_equal_frequency"),
 
 	// Reduced
+	SOLAR_1YEAR  ("solar_continuous_13country_1years"),
+	SOLAR_2YEAR("solar_continuous_13country_2years"),
+	SOLAR_3YEAR  ("solar_continuous_13country_3years"),
+	SOLAR_4YEAR("solar_continuous_13country_4years"),
+
 	WIND_1000ROWS				("wind_1000rows"),
 	WIND_100ROWS				("wind_100rows"),
 	WIND_100ROWS_3COUNTRIES		("wind_100rows_3countries"),
