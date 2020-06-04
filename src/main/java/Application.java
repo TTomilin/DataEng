@@ -17,10 +17,7 @@ import statistics.manager.PearsonMultiCorrelationManager;
 import statistics.manager.SpearmanCorrelationManager;
 import statistics.manager.TotalCorrelationManager;
 
-import static data.DataFile.SOLAR_DISCRETIZED;
-import static data.DataFile.SOLAR;
-import static data.DataFile.WIND;
-import static data.DataFile.WIND_DISCRETIZED;
+import static data.DataFile.*;
 import static statistics.Aggregator.AVG;
 import static statistics.Aggregator.MIN;
 import static statistics.Aggregator.MAX;
@@ -47,7 +44,7 @@ public class Application {
 		// correlation(SPEARMAN, SOLAR);
 
 		// Milestone 2
-		correlation(PEARSON_MULTI, WIND, Optional.of(AVG));
+		correlation(PEARSON_MULTI, WIND_1000ROWS, Optional.of(AVG));
 //		correlation(PEARSON_MULTI, SOLAR, Optional.of(AVG));
 //		correlation(PEARSON_MULTI, WIND, Optional.of(MIN));
 //		correlation(PEARSON_MULTI, WIND, Optional.of(MAX));
