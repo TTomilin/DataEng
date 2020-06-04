@@ -1,9 +1,9 @@
 package statistics.mapper.combinations;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.DoubleStream;
+import java.util.Set;
 
 import org.paukov.combinatorics.Generator;
 import org.paukov.combinatorics.ICombinatoricsVector;
@@ -37,7 +37,7 @@ public class PearsonMultiCombinationGenerator extends PearsonCombinationGenerato
 	 * Example (p = 4):
 	 * 								<DE, NL, BR, FR>
 	 *
-     * <DE> <NL, BR, FR>	<NL> <DE, BR, FR>	<BR> <DE, NL, FR>	<FR> <DE, NL, BR>
+	 * <DE> <NL, BR, FR>	<NL> <DE, BR, FR>	<BR> <DE, NL, FR>	<FR> <DE, NL, BR>
 	 * 			<DE, NL> <BR, FR>	<DE, BR> <NL, FR>	<DE, FR> <NL, BR>
 	 *
 	 * @param dataEntryVector
@@ -47,7 +47,12 @@ public class PearsonMultiCombinationGenerator extends PearsonCombinationGenerato
 	protected Collection<DataEntryCollection> toDataEntryPairs(ICombinatoricsVector<DataEntry> dataEntryVector) {
 		Generator<ICombinatoricsVector<DataEntry>> generator = new ComplexCombinationGenerator<>(dataEntryVector, N_COMBINATIONS);
 		List<ICombinatoricsVector<ICombinatoricsVector<DataEntry>>> combinatoricsVectorsList = generator.generateAllObjects();
-		return combinatoricsVectorsList.stream().map(this::toDataEntryPair).collect(Collectors.toSet());
+		Set<DataEntryCollection> entries = new HashSet<>();
+		for (ICombinatoricsVector<ICombinatoricsVector<DataEntry>> vector : combinatoricsVectorsList) {
+			entries.add(toDataEntryPair(vector));
+		}
+		return entries;
+//		return combinatoricsVectorsList.stream().map(this::toDataEntryPair).collect(Collectors.toSet());
 	}
 
 	/**
@@ -70,8 +75,31 @@ public class PearsonMultiCombinationGenerator extends PearsonCombinationGenerato
 	 * @return
 	 */
 	private Double aggregateValues(List<DataEntry> entries) {
-		DoubleStream doubleStream = entries.stream().mapToDouble(DataEntry::getValue);
-		return aggregator.getFunction().apply(doubleStream).orElseThrow(() -> new RuntimeException("Missing values"));
+		switch (aggregator) {
+		case MAX:
+			double max = Integer.MIN_VALUE;
+			for (DataEntry entry : entries) {
+				if (entry.getValue() > max) {
+					max = entry.getValue();
+				}
+			}
+		case MIN:
+			double min = Integer.MAX_VALUE;
+			for (DataEntry entry : entries) {
+				if (entry.getValue() < min) {
+					min = entry.getValue();
+				}
+			}
+		default:
+		case AVG:
+			double total = 0;
+			for (DataEntry entry : entries) {
+				total += entry.getValue();
+			}
+			return total / entries.size();
+		}
+//		DoubleStream doubleStream = entries.stream().mapToDouble(DataEntry::getValue);
+//		return aggregator.getFunction().apply(doubleStream).orElseThrow(() -> new RuntimeException("Missing values"));
 	}
 
 	/**
@@ -80,6 +108,11 @@ public class PearsonMultiCombinationGenerator extends PearsonCombinationGenerato
 	 * @return
 	 */
 	private Collection<String> getCountries(List<DataEntry> dataEntries) {
-		return dataEntries.stream().map(DataEntry::getCountry).collect(Collectors.toSet());
+		Set<String> countries = new HashSet<>();
+		for (DataEntry entry : dataEntries) {
+			countries.add(entry.getCountry());
+		}
+		return countries;
+//		return dataEntries.stream().map(DataEntry::getCountry).collect(Collectors.toSet());
 	}
 }
