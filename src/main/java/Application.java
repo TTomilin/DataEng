@@ -44,8 +44,8 @@ public class Application {
 		// correlation(SPEARMAN, SOLAR);
 
 		// Milestone 2
-//		correlation(PEARSON_MULTI, WIND, Optional.of(AVG));
-		correlation(PEARSON_MULTI, SOLAR_1YEAR, Optional.of(MIN));
+		correlation(PEARSON_MULTI, WIND, Optional.of(AVG));
+//		correlation(PEARSON_MULTI, SOLAR_1YEAR, Optional.of(AVG));
 //		correlation(PEARSON_MULTI, SOLAR_2YEAR, Optional.of(MIN));
 //		correlation(PEARSON_MULTI, SOLAR_3YEAR, Optional.of(MIN));
 //		correlation(PEARSON_MULTI, SOLAR_4YEAR, Optional.of(MIN));
