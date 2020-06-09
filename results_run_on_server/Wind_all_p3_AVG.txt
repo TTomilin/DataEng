@@ -1,0 +1,16 @@
+
+Calculating PEARSON_MULTI correlation of data from WIND
+Countries [SE, HU] and [DK], Correlation: 0.52761
+Countries [DK] and [SE, CH], Correlation: 0.52533
+Countries [DK] and [SE, CZ], Correlation: 0.53991
+Countries [EE] and [SI, LT], Correlation: 0.51786
+Countries [LT, LV] and [EE], Correlation: 0.52478
+Countries [DK] and [SE, BG], Correlation: 0.53006
+Countries [DK] and [SE, FI], Correlation: 0.50511
+Countries [PL] and [SE, DK], Correlation: 0.52097
+Countries [DK] and [SE, LV], Correlation: 0.52673
+Countries [EE] and [CH, LT], Correlation: 0.51301
+Countries [SE, SI] and [DK], Correlation: 0.52573
+Countries [SE, LT] and [DK], Correlation: 0.54896
+Countries [DK] and [EE, SE], Correlation: 0.53368
+
