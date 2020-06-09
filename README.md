@@ -1,5 +1,9 @@
 # Q4 Data Engineering 
 
+## Code for Java8
+
+Most servers require Java8, therefore the Java11 code has also been downgraded to support this legacy version. It can be found at: https://github.com/TTomilin/DataEng/tree/run-java8-on-server
+
 ## Instructions for running
 
 1. Import the pom.xml as a Maven project in the IDE
