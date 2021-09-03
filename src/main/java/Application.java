@@ -17,7 +17,9 @@ import statistics.manager.PearsonMultiCorrelationManager;
 import statistics.manager.SpearmanCorrelationManager;
 import statistics.manager.TotalCorrelationManager;
 
-import static data.DataFile.WIND_1000ROWS;
+import static data.DataFile.SOLAR_DISCRETIZED;
+import static data.DataFile.WIND_100ROWS;
+import static data.DataFile.WIND_DISCRETIZED;
 import static statistics.Aggregator.AVG;
 import static statistics.CorrelationType.PEARSON;
 import static statistics.CorrelationType.PEARSON_MULTI;
@@ -28,7 +30,7 @@ public class Application {
 
 	private static Map<CorrelationType, CorrelationManager> managers;
 	private static LogLevel logLevel = LogLevel.WARN;
-	private static final Integer P_VALUE = 3; // Define the p-value here
+	private static final Integer P_VALUE = 5; // Define the p-value here
 
 	public static void main(String[] args) {
 		setHadoopHome(args);
@@ -42,10 +44,10 @@ public class Application {
 		// correlation(SPEARMAN, SOLAR);
 
 		// Milestone 2
-		correlation(PEARSON_MULTI, WIND_1000ROWS, Optional.of(AVG));
+		correlation(PEARSON_MULTI, WIND_100ROWS, Optional.of(AVG));
 
-//		correlation(TOTAL, WIND_DISCRETIZED);
-//		correlation(TOTAL, SOLAR_DISCRETIZED);
+		correlation(TOTAL, WIND_DISCRETIZED);
+		correlation(TOTAL, SOLAR_DISCRETIZED);
 	}
 
 	private static void setHadoopHome(String[] args) {
@@ -68,12 +70,10 @@ public class Application {
 	}
 
 	private static void correlation(CorrelationType type, DataFile file, Optional<Aggregator> aggregator) {
-		long startTime = System.currentTimeMillis();
 		logCorrelationStart(type, file);
 		CorrelationManager manager = managers.get(type);
 		aggregator.ifPresent(agg -> ((PearsonMultiCorrelationManager) manager).updateAggregator(agg));
 		manager.calculateCorrelations(file).forEach(Application::logCorrelation);
-		System.out.println("Time elapsed: " + (System.currentTimeMillis() - startTime) / 1000 + "s");
 	}
 
 	private static void logCorrelationStart(CorrelationType type, DataFile file) {

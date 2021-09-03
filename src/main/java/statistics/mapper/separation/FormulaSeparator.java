@@ -1,9 +1,7 @@
 package statistics.mapper.separation;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 import org.apache.spark.api.java.function.PairFlatMapFunction;
 
@@ -33,15 +31,9 @@ public abstract class FormulaSeparator implements PairFlatMapFunction<DataEntryC
 		CorrelationMeasurePair valuePair = pair.getCorrelationMeasurePair();
 		double x = valuePair.getFirstValue();
 		double y = valuePair.getSecondValue();
-		Collection<Tuple2<FormulaComponentType, Double>> components = getFormulaComponents(x, y);
-		Set<Tuple2<FormulaComponentKey, FormulaComponentValue>> tuples = new HashSet<>();
-		for (Tuple2<FormulaComponentType, Double> component : components) {
-			tuples.add(createTuple(pair, component));
-		}
-		return tuples.iterator();
-		/*return components.stream()
+		return getFormulaComponents(x, y).stream()
 				.map(component -> createTuple(pair, component))
-				.iterator();*/
+				.iterator();
 	}
 
 	/**
