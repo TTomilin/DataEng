@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.IterableUtils;
 import org.apache.spark.api.java.function.FlatMapFunction;
@@ -32,10 +33,10 @@ public abstract class CombinationGenerator implements FlatMapFunction<Tuple2<Tim
 	@Override
 	public Iterator<DataEntryCollection> call(Tuple2<Timestamp, Iterable<DataEntry>> tuple) {
 		Collection<DataEntry> dataEntries = IterableUtils.toList(tuple._2());
-		List<ICombinatoricsVector<DataEntry>> iCombinatoricsVectors = generateCombinations(dataEntries);
-		return iCombinatoricsVectors.stream()
+		return generateCombinations(dataEntries).stream()
 				.map(this::toDataEntryPairs)
 				.flatMap(Collection::stream)
+				.collect(Collectors.toList())
 				.iterator();
 	}
 
