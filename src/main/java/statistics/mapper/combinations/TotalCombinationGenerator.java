@@ -26,7 +26,7 @@ public class TotalCombinationGenerator extends CombinationGenerator {
 		return generateCombinations(dataEntries).stream()
 				.map(ICombinatoricsVector::getVector)
 				.map(this::toEntrySet)
-				.collect(Collectors.toUnmodifiableSet())
+				.collect(Collectors.toSet())
 				.iterator();
 	}
 
